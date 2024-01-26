@@ -1,0 +1,13 @@
+{
+  "name" : "game1",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "f1c6efee2245009540dde947e0e3d008f3aa7dbb",
+  "dependencies" : [ {
+    "name" : "sdl2",
+    "version>=" : "2.28.5#1"
+  }, {
+    "name" : "imgui",
+    "version>=" : "1.90#3",
+    "features": [ "sdl2-binding", "sdl2-renderer-binding", "docking-experimental"]
+  } ]
+}
