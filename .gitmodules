@@ -1,0 +1,3 @@
+[submodule "Game1/assets/private"]
+	path = Game1/assets/private
+	url = git@github.com:joshbatley/GameAssets.git

@@ -33,6 +33,8 @@
 
 **/.idea/*
 
+.DS_Store
+
 #Camke
 **/cmake-build-debug
 **/CMakeCache.txt
