@@ -1,21 +1,18 @@
 #include "Game.h"
 #include <iostream>
 
-Game *game = new Game();
-int main(int, char **)
+int main(int, char**)
 {
-    const int FPS = 60;
-    const int FrameDelay = 1000 / FPS;
+    Game* game = new Game();
+    const auto FPS = 60;
+    const auto FrameDelay = 1000 / FPS;
     Uint32 frameStart;
     const std::string myPath = DUNGEON_STUFF;
 
     game->Init("Game 1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, false);
 
     while (game->IsRunning()) {
-
-
         frameStart = SDL_GetTicks();
-        std::cout << game->IsRunning() << std::endl;
 
         game->HandleEvents();
         game->Update();
@@ -27,7 +24,6 @@ int main(int, char **)
         }
     }
 
-    std::cout << "Here" << std::endl;
     game->Clean();
     return 0;
 }
