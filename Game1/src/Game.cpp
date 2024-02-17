@@ -31,7 +31,7 @@ void Game::Init(const char *title, int x, int y, int width, int height, bool isF
 
     isRunning = true;
 
-    std::string path = "/" + std::string(DUNGEON_STUFF) + "/characters/Archer/archer-idle-front-v2.png";
+    std::string path = "/" + std::string(SPROUT_LANDS) + "/Characters/character-spritesheet.png";
     SDL_Surface *tmp = IMG_Load(path.c_str());
     playerTex = SDL_CreateTextureFromSurface(renderer, tmp);
     SDL_FreeSurface(tmp);
@@ -41,19 +41,37 @@ void Game::HandleEvents()
 {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT
-            || event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE
-                 && event.window.windowID == SDL_GetWindowID(window))
+        if (event.type == SDL_QUIT) {
             isRunning = false;
+        }
     }
 }
 
+int count = 0;
+int skin = 0;
+
 void Game::Update()
 {
+    count++;
+    if (count > 10) {
+        count = 0;
+        skin++;
+        if (skin >= 4) {
+            skin = 0;
+        }
+    }
+
     dest.h = 128;
     dest.w = 128;
-    src.w = 24;
-    src.h = 24;
+    dest.y = 30;
+
+    src.w = 48;
+    src.h = 48;
+
+    src.y = 0;
+    src.x = skin * 48;
+
+    //    printf("this");
 }
 
 void Game::Render()
