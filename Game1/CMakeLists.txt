@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.27)
 project(Game)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)

@@ -39,7 +39,6 @@ int main(int, char **)
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    ImGui::GetIO().IniFilename = "./imgui.ini";
 
     // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
