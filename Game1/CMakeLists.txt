@@ -8,8 +8,6 @@ find_package(SDL2_image CONFIG REQUIRED)
 include(assets/private/gameassets.cmake)
 
 add_executable(Game src/main.cpp
-        src/Game.cpp
-        src/Game.h
         src/Utils.h
         src/Utils.cpp
         src/Player.cpp

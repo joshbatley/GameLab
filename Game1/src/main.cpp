@@ -1,22 +1,56 @@
-#include "Game.h"
-#include <iostream>
+#include "Player.h"
+#include "SDL.h"
+
+const auto FPS = 60;
+const auto FrameDelay = 1000 / FPS;
 
 int main(int, char**)
 {
-    Game* game = new Game();
-    const auto FPS = 60;
-    const auto FrameDelay = 1000 / FPS;
-    Uint32 frameStart;
-    const std::string myPath = DUNGEON_STUFF;
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
+        printf("Error: %s\n", SDL_GetError());
+        return -1;
+    }
 
-    game->Init("Game 1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, false);
+    auto window = SDL_CreateWindow("Game 1",
+      SDL_WINDOWPOS_CENTERED,
+      SDL_WINDOWPOS_CENTERED,
+      1280,
+      720,
+      SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+    if (window == nullptr) {
+        printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
+        return -1;
+    }
 
-    while (game->IsRunning()) {
-        frameStart = SDL_GetTicks();
+    auto renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr) {
+        printf("Error creating SDL_Renderer!");
+        return -1;
+    }
 
-        game->HandleEvents();
-        game->Update();
-        game->Render();
+    Player* player = new Player(renderer);
+    bool isRunning = true;
+
+
+    while (isRunning) {
+        Uint32 frameStart = SDL_GetTicks();
+
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            switch (event.type) {
+            case SDL_QUIT:
+                isRunning = false;
+            }
+        }
+
+        player->Update();
+
+        SDL_SetRenderDrawColor(renderer, 0, 145, 145, 255);
+        SDL_RenderClear(renderer);
+
+        player->Render(renderer);
+
+        SDL_RenderPresent(renderer);
 
         int frameTime = SDL_GetTicks() - frameStart;
         if (FrameDelay > frameTime) {
@@ -24,6 +58,8 @@ int main(int, char**)
         }
     }
 
-    game->Clean();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
     return 0;
 }
