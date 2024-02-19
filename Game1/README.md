@@ -4,7 +4,7 @@ Simple game where a character moves around, and we can change the map with basic
 
 ### TODO
 
-- [ ] Player
-- [ ] Map
+- [x] Player
+- [x] Map
 - [ ] Level Select
-- [ ] Collision
+- [x] Collision

@@ -11,7 +11,9 @@ add_executable(Game src/main.cpp
         src/Utils.h
         src/Utils.cpp
         src/Player.cpp
-        src/Player.h)
+        src/Player.h
+        src/Tile.cpp
+        src/Tile.h)
 
 target_link_libraries(Game PRIVATE SDL2::SDL2)
 target_link_libraries(Game PRIVATE SDL2_image::SDL2_image-static)
