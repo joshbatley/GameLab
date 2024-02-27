@@ -25,14 +25,13 @@ int main(int, char**)
         return -1;
     }
 
-    //    SDL_RenderSetLogicalSize(renderer, 480, 512);
-
     Player* player = new Player(renderer, 4);
     Tile* tile = new Tile(renderer);
     bool isRunning = true;
 
     while (isRunning) {
         Uint32 frameStart = SDL_GetTicks();
+
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -45,6 +44,9 @@ int main(int, char**)
                 }
                 if (event.key.keysym.sym == SDLK_2) {
                     tile->loadLevel(2);
+                }
+                if (event.key.keysym.sym == SDLK_3) {
+                    tile->loadLevel(3);
                 }
 
                 if (event.key.keysym.sym == SDLK_d) {
@@ -60,18 +62,19 @@ int main(int, char**)
                     player->MoveDown(tile->Level);
                 }
                 break;
-            case SDL_KEYUP:
-
-                break;
             }
         }
 
         player->Update();
+
+
         SDL_SetRenderDrawColor(renderer, 0, 145, 145, 255);
         SDL_RenderClear(renderer);
+
         tile->render(renderer);
         player->Render(renderer);
         SDL_RenderPresent(renderer);
+
         int frameTime = SDL_GetTicks() - frameStart;
         if (FrameDelay > frameTime) {
             SDL_Delay(FrameDelay - frameTime);

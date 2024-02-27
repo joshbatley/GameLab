@@ -19,16 +19,17 @@ class Player
     void MoveDown(std::vector<std::vector<int>>* level);
 
   private:
-    int direction = 0;// -1 == left, 0 == idle, 1 == right
     SDL_Rect src;
     SDL_Rect dest;
     SDL_Texture* texture = textureDown;
     SDL_Texture* textureDown;
     SDL_Texture* textureUp;
-    SDL_Texture* textureSide;
+    SDL_Texture* textureLeft;
+    SDL_Texture* textureRight;
     std::string pathDown = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-front.png";
     std::string pathUp = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-back.png";
-    std::string pathSide = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-side.png";
+    std::string pathLeft = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-left.png";
+    std::string pathRight = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-right.png";
 };
 
 
