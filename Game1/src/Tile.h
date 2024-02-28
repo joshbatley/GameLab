@@ -5,6 +5,8 @@
 #include "Utils.h"
 #include <string>
 
+const int tileSize = 32;
+
 class Tile
 {
   public:
@@ -13,12 +15,18 @@ class Tile
     void render(SDL_Renderer* renderer);
     std::vector<std::vector<int>>* Level = &level1;
     void loadLevel(int lvl);
+    bool removeCoin(int x, int y);
 
   private:
     SDL_Rect src;
     SDL_Rect dest;
     SDL_Texture* sprite_sheet;
+    SDL_Texture* coin;
+    SDL_Rect coin_src = { h : tileSize, w : tileSize, x : 0, y : 0 };
     std::string path = std::string(DUNGEON_STUFF) + "/tiles/dungeon-tiles.png";
+    std::string count_path = std::string(DUNGEON_STUFF) + "/objects/coins.png";
+    int coins[15][15];
+    void LoadCoins();
     std::vector<std::vector<int>> level1 = { { 33, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 26, 34 },
         { 15, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 13 },
         { 15, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 13 },

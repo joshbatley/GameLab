@@ -25,11 +25,12 @@ int main(int, char**)
         return -1;
     }
 
-    Player* player = new Player(renderer, 4);
+    Player* player = new Player(renderer, 1);
     Tile* tile = new Tile(renderer);
     bool isRunning = true;
+    int level = 1;
 
-    while (isRunning) {
+    while (isRunning && level <= 3) {
         Uint32 frameStart = SDL_GetTicks();
 
         SDL_Event event;
@@ -39,27 +40,37 @@ int main(int, char**)
                 isRunning = false;
                 break;
             case SDL_KEYDOWN:
-                if (event.key.keysym.sym == SDLK_1) {
-                    tile->loadLevel(1);
-                }
-                if (event.key.keysym.sym == SDLK_2) {
-                    tile->loadLevel(2);
-                }
-                if (event.key.keysym.sym == SDLK_3) {
-                    tile->loadLevel(3);
-                }
-
                 if (event.key.keysym.sym == SDLK_d) {
-                    player->MoveRight(tile->Level);
+                    auto pos = player->MoveRight(tile->Level);
+                    auto completed = tile->removeCoin(pos.first, pos.second);
+                    if (completed) {
+                        level++;
+                        tile->loadLevel(level);
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_a) {
-                    player->MoveLeft(tile->Level);
+                    auto pos = player->MoveLeft(tile->Level);
+                    auto completed = tile->removeCoin(pos.first, pos.second);
+                    if (completed) {
+                        level++;
+                        tile->loadLevel(level);
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_w) {
-                    player->MoveUp(tile->Level);
+                    auto pos = player->MoveUp(tile->Level);
+                    auto completed = tile->removeCoin(pos.first, pos.second);
+                    if (completed) {
+                        level++;
+                        tile->loadLevel(level);
+                    }
                 }
                 if (event.key.keysym.sym == SDLK_s) {
-                    player->MoveDown(tile->Level);
+                    auto pos = player->MoveDown(tile->Level);
+                    auto completed = tile->removeCoin(pos.first, pos.second);
+                    if (completed) {
+                        level++;
+                        tile->loadLevel(level);
+                    }
                 }
                 break;
             }

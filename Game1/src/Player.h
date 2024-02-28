@@ -13,10 +13,10 @@ class Player
     ~Player();
     void Render(SDL_Renderer* renderer);
     void Update();
-    void MoveRight(std::vector<std::vector<int>>* level);
-    void MoveLeft(std::vector<std::vector<int>>* level);
-    void MoveUp(std::vector<std::vector<int>>* level);
-    void MoveDown(std::vector<std::vector<int>>* level);
+    std::pair<int, int> MoveRight(std::vector<std::vector<int>>* level);
+    std::pair<int, int> MoveLeft(std::vector<std::vector<int>>* level);
+    std::pair<int, int> MoveUp(std::vector<std::vector<int>>* level);
+    std::pair<int, int> MoveDown(std::vector<std::vector<int>>* level);
 
   private:
     SDL_Rect src;
