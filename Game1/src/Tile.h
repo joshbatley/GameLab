@@ -16,8 +16,13 @@ class Tile
     std::vector<std::vector<int>>* Level = &level1;
     void loadLevel(int lvl);
     bool removeCoin(int x, int y);
+    int GetCoinsLeft()
+    {
+        return coins_left;
+    }
 
   private:
+    int coins_left;
     SDL_Rect src;
     SDL_Rect dest;
     SDL_Texture* sprite_sheet;

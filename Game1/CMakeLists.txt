@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
+find_package(SDL2_ttf CONFIG REQUIRED)
 include(assets/private/gameassets.cmake)
 
 add_executable(Game src/main.cpp
@@ -16,4 +17,5 @@ add_executable(Game src/main.cpp
         src/Tile.h)
 
 target_link_libraries(Game PRIVATE SDL2::SDL2)
+target_link_libraries(Game PRIVATE SDL2_ttf::SDL2_ttf-static)
 target_link_libraries(Game PRIVATE SDL2_image::SDL2_image-static)

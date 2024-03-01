@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "Tile.h"
 
 const auto FPS = 60;
@@ -30,7 +31,10 @@ int main(int, char**)
     bool isRunning = true;
     int level = 1;
 
-    while (isRunning && level <= 3) {
+    TTF_Init();
+    TTF_Font* font = TTF_OpenFont("/Users/josh/Library/Fonts/MonoLisa-Regular.ttf", 20);
+
+    while (isRunning) {
         Uint32 frameStart = SDL_GetTicks();
 
         SDL_Event event;
@@ -39,7 +43,15 @@ int main(int, char**)
             case SDL_QUIT:
                 isRunning = false;
                 break;
+            case SDL_MOUSEBUTTONUP:
+                if (level == 4) {
+                    isRunning = false;
+                }
+                break;
             case SDL_KEYDOWN:
+                if (level == 4) {
+                    isRunning = false;
+                }
                 if (event.key.keysym.sym == SDLK_d) {
                     auto pos = player->MoveRight(tile->Level);
                     auto completed = tile->removeCoin(pos.first, pos.second);
@@ -76,24 +88,52 @@ int main(int, char**)
             }
         }
 
-        player->Update();
-
-
-        SDL_SetRenderDrawColor(renderer, 0, 145, 145, 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        tile->render(renderer);
-        player->Render(renderer);
-        SDL_RenderPresent(renderer);
+        if (level >= 4) {
+            SDL_Color textColor = { 255, 255, 255 };
+            std::string text = "Game Over";
+
+            // Render text to a surface
+            SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text.c_str(), textColor);
+
+            // Convert surface to texture
+            SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+            SDL_Rect messageRect = { 180, 200, surfaceMessage->w, surfaceMessage->h };
+            SDL_RenderCopy(renderer, message, NULL, &messageRect);
+        } else {
+            player->Update();
+
+
+            tile->render(renderer);
+            player->Render(renderer);
+
+            // Set text and color
+            SDL_Color textColor = { 255, 255, 255 };
+            std::string text = "Coins Left: " + std::to_string(tile->GetCoinsLeft());
+
+            // Render text to a surface
+            SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text.c_str(), textColor);
+
+            // Convert surface to texture
+            SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+            SDL_Rect messageRect = { 10, 450, surfaceMessage->w, surfaceMessage->h };
+
+            SDL_RenderCopy(renderer, message, NULL, &messageRect);
+        }
 
         int frameTime = SDL_GetTicks() - frameStart;
         if (FrameDelay > frameTime) {
             SDL_Delay(FrameDelay - frameTime);
         }
+        SDL_RenderPresent(renderer);
     }
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+    TTF_CloseFont(font);
+    TTF_Quit();
     return 0;
 }

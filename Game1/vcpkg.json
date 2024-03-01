@@ -8,5 +8,8 @@
   }, {
     "name" : "sdl2-image",
     "version>=" : "2.6.3#1"
+  }, {
+    "name" : "sdl2-ttf",
+    "version>=" : "2.20.2#1"
   } ]
 }

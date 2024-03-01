@@ -65,9 +65,11 @@ void Tile::loadLevel(int lvl)
 
 void Tile::LoadCoins()
 {
+    coins_left = 0;
     for (int x = 0; x < 15; x++) {
         for (int y = 0; y < 15; y++) {
             if (Level->at(x).at(y) == 48) {
+                coins_left++;
                 coins[x][y] = 1;
             } else {
                 coins[x][y] = 0;
@@ -79,14 +81,19 @@ bool Tile::removeCoin(int x, int y)
 {
     if (coins[x][y] == 1) {
         coins[x][y] = 0;
+        coins_left--;
     }
 
-    for (int x = 0; x < 15; x++) {
-        for (int y = 0; y < 15; y++) {
-            if (coins[x][y] == 1) {
-                return false;
-            }
-        }
+    if (coins_left <= 0) {
+        return true;
     }
-    return true;
+    return false;
+
+    //    for (int x = 0; x < 15; x++) {
+    //        for (int y = 0; y < 15; y++) {
+    //            if (coins[x][y] == 1) {
+    //
+    //            }
+    //        }
+    //    }
 }
