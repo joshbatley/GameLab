@@ -88,12 +88,4 @@ bool Tile::removeCoin(int x, int y)
         return true;
     }
     return false;
-
-    //    for (int x = 0; x < 15; x++) {
-    //        for (int y = 0; y < 15; y++) {
-    //            if (coins[x][y] == 1) {
-    //
-    //            }
-    //        }
-    //    }
 }

@@ -27,7 +27,7 @@ class Tile
     SDL_Rect dest;
     SDL_Texture* sprite_sheet;
     SDL_Texture* coin;
-    SDL_Rect coin_src = { h : tileSize, w : tileSize, x : 0, y : 0 };
+    SDL_Rect coin_src = { 0, 0, tileSize, tileSize };
     std::string path = std::string(DUNGEON_STUFF) + "/tiles/dungeon-tiles.png";
     std::string count_path = std::string(DUNGEON_STUFF) + "/objects/coins.png";
     int coins[15][15];

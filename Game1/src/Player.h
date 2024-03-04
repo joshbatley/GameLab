@@ -21,11 +21,11 @@ class Player
   private:
     SDL_Rect src;
     SDL_Rect dest;
-    SDL_Texture* texture = textureDown;
     SDL_Texture* textureDown;
     SDL_Texture* textureUp;
     SDL_Texture* textureLeft;
     SDL_Texture* textureRight;
+    SDL_Texture* texture;
     std::string pathDown = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-front.png";
     std::string pathUp = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-back.png";
     std::string pathLeft = std::string(DUNGEON_STUFF) + "/characters/archer/archer-idle-left.png";
