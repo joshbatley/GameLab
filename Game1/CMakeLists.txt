@@ -20,5 +20,6 @@ target_link_libraries(Game PRIVATE SDL2::SDL2)
 target_link_libraries(Game PRIVATE SDL2_ttf::SDL2_ttf-static)
 target_link_libraries(Game PRIVATE SDL2_image::SDL2_image-static)
 
+## QQ for Game.app will make a proper build system
 set_target_properties(Game PROPERTIES MACOSX_BUNDLE TRUE)
 file(COPY ${CMAKE_BINARY_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR}/Game.app/Contents/Resources/)
