@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
+
 include(assets/private/gameassets.cmake)
 file(COPY assets/font.ttf DESTINATION ${CMAKE_BINARY_DIR}/assets)
 
