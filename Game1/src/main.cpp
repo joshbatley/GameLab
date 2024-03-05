@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "Tile.h"
+#include <iostream>
 
 const auto FPS = 60;
 const auto FrameDelay = 1000 / FPS;
@@ -9,20 +10,20 @@ const auto FrameDelay = 1000 / FPS;
 int main(int, char**)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
-        printf("Error: %s\n", SDL_GetError());
+        std::cout << "SDL failed to init. Error: " << SDL_GetError() << std::endl;
         return -1;
     }
 
     auto window =
       SDL_CreateWindow("Game 1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 480, 480, SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
-        printf("Error: SDL_CreateWindow(): %s\n", SDL_GetError());
+        std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
         return -1;
     }
 
     auto renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
-        printf("Error creating SDL_Renderer!");
+        std::cout << "Renderer failed to init. Error: " << SDL_GetError() << std::endl;
         return -1;
     }
 
@@ -32,7 +33,7 @@ int main(int, char**)
     int level = 1;
 
     TTF_Init();
-    TTF_Font* font = TTF_OpenFont("/Users/josh/Library/Fonts/MonoLisa-Regular.ttf", 20);
+    TTF_Font* font = TTF_OpenFont("assets/font.ttf", 20);
 
     while (isRunning) {
         Uint32 frameStart = SDL_GetTicks();
