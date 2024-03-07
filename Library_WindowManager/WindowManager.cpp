@@ -19,6 +19,7 @@ WindowManager::WindowManager(const char *title, int x, int y, int w, int h, Uint
     }
 
     TTF_Init();
+    SDL_ShowCursor(SDL_DISABLE);
 }
 
 void WindowManager::Clear() {

@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "Utils.h"
 #include <string>
+#include <vector>
 
 const int tileSize = 32;
 

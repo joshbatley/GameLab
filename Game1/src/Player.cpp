@@ -1,5 +1,5 @@
 #include "Player.h"
-#include <iostream>
+
 
 const int move_amount = 32;
 

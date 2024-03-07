@@ -26,6 +26,7 @@ int main(int, char**)
         std::cout << "Renderer failed to init. Error: " << SDL_GetError() << std::endl;
         return -1;
     }
+    SDL_ShowCursor(SDL_DISABLE);
 
     Player* player = new Player(renderer, 1);
     Tile* tile = new Tile(renderer);
