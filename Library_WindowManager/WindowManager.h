@@ -9,9 +9,9 @@
 
 const int FRAME_RATE = 60;
 
-class Window {
+class WindowManager {
 public:
-    Window(const char *title, int x, int y, int w, int h, Uint32 flags);
+    WindowManager(const char *title, int x, int y, int w, int h, Uint32 flags);
     void Clear();
     void Present();
     void CleanUp();
@@ -19,10 +19,10 @@ public:
     void LimitFrameRate() const;
 
     void LoadFont(const char* name, const char* path, int size);
-    SDL_Texture* LoadTex(const char* path);
+    SDL_Texture* LoadTexture(const char* path);
 
     void RenderText(const char *text, const char *fontKey, SDL_Color color, SDL_Rect dest);
-    void Render();
+    void Render(SDL_Texture* texture, SDL_Rect src, SDL_Rect dest);
 
 private:
     SDL_Renderer* renderer;
