@@ -42,14 +42,6 @@ int main(int, char**)
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
-            case SDL_QUIT:
-                isRunning = false;
-                break;
-            case SDL_MOUSEBUTTONUP:
-                if (level == 4) {
-                    isRunning = false;
-                }
-                break;
             case SDL_KEYDOWN:
                 if (level == 4) {
                     isRunning = false;

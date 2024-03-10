@@ -52,6 +52,7 @@ std::pair<int, int> Player::MoveDown(std::vector<std::vector<int>>* level)
     auto moveY = (dest.y + move_amount) / 32;
     if (level->at(moveY).at(moveX) == 48) {
         dest.y += dest.y + move_amount < 480 ? move_amount : 0;
+        std::cout << "moving" << std::endl;
     }
     texture = textureDown;
     return { moveY, moveX };

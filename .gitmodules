@@ -1,3 +1,6 @@
 [submodule "Game_1_CoinCollector/assets/private"]
 	path = Game_1_CoinCollector/assets/private
 	url = git@github.com:joshbatley/GameAssets.git
+[submodule "Game_2_CoinCollector_Refactor/assets/private"]
+	path = Game_2_CoinCollector_Refactor/assets/private
+	url = git@github.com:joshbatley/GameAssets.git
