@@ -1,43 +1,70 @@
-#ifndef LIBRARY_INPUTMANAGER_H
-#define LIBRARY_INPUTMANAGER_H
+#pragma once
 
 #include "SDL.h"
-#include <iostream>
-#include <vector>
 #include <functional>
+#include <iostream>
 #include <unordered_map>
 
-enum EventType {
-    KEY_PRESSED,
-    MOUSE_MOVED,
-};
+namespace Input {
+    enum EventType
+    {
+        KEY_PRESSED,
+        MOUSE_MOVED,
+    };
 
-enum InputAction {
-    Up,
-    Down,
-    Left,
-    Right,
-};
+    enum InputAction
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
 
-struct MousePosition {
-    int x;
-    int y;
-};
+        COUNT,
+    };
 
+    enum InputState
+    {
+        INPUT_PRESENT = 1 << 7,
+        INPUT_REPEAT = 1 << 3,
+        INPUT_PRESS = 1 << 2,
+        INPUT_UP = 1 << 1,
+        INPUT_DOWN = 1 << 0,
+    };
 
-class InputManager {
-public:
-    void Subscribe(EventType type, std::function<void()> callback);
-    void ProcessEvents();
-    bool IsActionPressed(InputAction key);
-    MousePosition GetMousePosition();
+    struct MousePosition
+    {
+        int x;
+        int y;
+    };
 
-private:
-    std::unordered_map<EventType, std::vector<std::function<void()>>> eventListeners;
-    std::unordered_map<InputAction, std::vector<SDL_KeyCode>> actionMap;
-    MousePosition mousePosition;
+    struct KeyEvent
+    {
+        uint8_t state;
+        int time;
+    };
+}
 
-    void dispatchEvent(EventType eventType);
-};
+namespace Input
+{
+    class Manager
+    {
+    public:
+        Manager();
+        void Update();
+        void ProcessEvents(const SDL_Event* event);
 
-#endif// LIBRARY_INPUTMANAGER_H
+        bool IsActionPressed(InputAction action) const;
+        bool IsActionDown(InputAction action) const;
+        bool IsActionUp(InputAction action) const;
+
+        MousePosition GetMousePosition() const;
+
+    private:
+        std::unordered_map<SDL_Scancode, InputAction> _controlMap;
+        MousePosition _mousePosition;
+        KeyEvent _buttons[COUNT];
+        std::vector<InputAction> _buttonsToClear;
+
+        InputAction lookUpAction(SDL_Scancode code);
+    };
+} // namespace Input
