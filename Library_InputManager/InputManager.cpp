@@ -69,17 +69,22 @@ namespace Input {
 
     bool Manager::IsActionPressed(const InputAction action) const
     {
-        return (_buttons[action].state & INPUT_PRESS);
+        return _buttons[action].IsPressed();
     }
 
     bool Manager::IsActionDown(const InputAction action) const
     {
-        return (_buttons[action].state & INPUT_DOWN);
+    return _buttons[action].IsDown();
     }
 
     bool Manager::IsActionUp(const InputAction action) const
     {
-        return (_buttons[action].state & INPUT_UP);
+        return _buttons[action].IsUp();
+    }
+
+    bool Manager::IsActionRepeating(const InputAction action) const
+    {
+        return _buttons[action].IsRepeating();
     }
 
     MousePosition Manager::GetMousePosition() const

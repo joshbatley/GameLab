@@ -5,20 +5,15 @@
 #include <iostream>
 #include <unordered_map>
 
-namespace Input {
-    enum EventType
-    {
-        KEY_PRESSED,
-        MOUSE_MOVED,
-    };
-
+namespace Input
+{
     enum InputAction
     {
         UP,
         DOWN,
         LEFT,
         RIGHT,
-
+        // META
         COUNT,
     };
 
@@ -41,11 +36,28 @@ namespace Input {
     {
         uint8_t state;
         int time;
-    };
-}
 
-namespace Input
-{
+        bool IsPressed() const
+        {
+            return state & INPUT_PRESS;
+        }
+
+        bool IsDown() const
+        {
+            return state & INPUT_DOWN;
+        }
+
+        bool IsUp() const
+        {
+            return state & INPUT_UP;
+        }
+
+        bool IsRepeating() const
+        {
+            return state & INPUT_REPEAT;
+        }
+    };
+
     class Manager
     {
     public:
@@ -56,6 +68,7 @@ namespace Input
         bool IsActionPressed(InputAction action) const;
         bool IsActionDown(InputAction action) const;
         bool IsActionUp(InputAction action) const;
+        bool IsActionRepeating(InputAction action) const;
 
         MousePosition GetMousePosition() const;
 

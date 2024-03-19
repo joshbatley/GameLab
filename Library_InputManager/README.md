@@ -14,3 +14,7 @@ Initial release
 ---
 Improved eventing and updated logic for different type of event
 > After testing in Game2 Refactored it was not fit for purpose this fixes more of the bug bares.
+
+\#1.2
+---
+Updated the struct layout for Inputs to abstract away the bitwise logic and minor clean up. 
