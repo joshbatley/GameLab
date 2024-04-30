@@ -1,1 +1,1 @@
-#include "RenderableComponent.h"
+#include "RenderedComponent.h"

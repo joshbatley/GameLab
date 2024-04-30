@@ -1,7 +1,6 @@
 #pragma once
 
-
-class RenderableComponent {
+class RenderedComponent {
 public:
-    bool isRenderable = true;
+    bool shouldRender = true;
 };

@@ -1,6 +1,11 @@
-#include "UpdateSystem.h"
+#include "Systems.h"
 
-void UpdateSystem::Update(entt::registry &reg)
+void Systems::Update(entt::registry &reg)
+{
+
+}
+
+void Systems::Render(entt::registry &reg)
 {
     auto view = reg.view<RenderedComponent>();
     for (auto entity: view) {

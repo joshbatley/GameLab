@@ -1,4 +1,4 @@
-#ifndef GAME_3_FARMER_COMPONENTS_H
-#define GAME_3_FARMER_COMPONENTS_H
+#pragma once
 
-#endif//GAME_3_FARMER_COMPONENTS_H
+#include "Player.h"
+#include "RenderedComponent.h"

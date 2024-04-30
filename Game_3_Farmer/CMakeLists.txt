@@ -13,13 +13,16 @@ include_directories(${ENTT_INCLUDE_DIRS})
 
 file(GLOB ENGINE src/Engine/*.cpp src/Engine/*.h)
 file(GLOB COMPONENTS src/Components/*.cpp src/Components/*.h)
+file(GLOB SYSTEMS src/System/*.cpp src/System/*.h)
 
 add_executable(Game_3_Farmer src/main.cpp
         ${ENGINE}
         ${COMPONENTS}
-        src/Entity.h
-        src/Player.h
-        src/Player.cpp
+        ${SYSTEMS}
+        src/WorldManager.cpp
+        src/WorldManager.h
+        src/TimeManager.cpp
+        src/TimeManager.h
 )
 
 target_link_libraries(Game_3_Farmer PRIVATE EnTT::EnTT)

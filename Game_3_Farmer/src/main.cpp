@@ -1,27 +1,28 @@
-#include <entt/entt.hpp>
 #include "Engine/Engine.h"
-#include "Player.h"
+#include "System/Systems.h"
+#include "TimeManager.h"
+#include "WorldManager.h"
+#include <entt/entt.hpp>
 
 int main()
 {
     Window::Manager window("Game 3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_RESIZABLE);
     Renderer::Manager renderer(window.GetRenderer());
 
-    Input::Manager inputManager;
     entt::registry registry;
 
-    auto ent = registry.create();
-    registry.emplace<Player>(ent, 1);
-    registry.emplace<Entity>(ent);
+    Input::Manager inputManager;
+    TimeManager timeManager;
 
-    auto ent2 = registry.create();
-    registry.emplace<Player>(ent2, 2);
-    registry.emplace<Entity>(ent2);
+    WorldManager worldManager;
+    Systems updateSystem;
+
+    worldManager.Init(registry);
 
     bool isRunning = true;
     while (isRunning) {
         window.FrameStart();
-
+        timeManager.Update(SDL_GetTicks());
         inputManager.Update();
 
         SDL_Event event;
@@ -35,20 +36,18 @@ int main()
         }
 
         // Updates
-        auto view = registry.view<Entity>();
-        for (auto entity : view) {
-            auto& player = registry.get<Player>(entity);
-            player.Update();
-        }
+        updateSystem.Update(registry);
 
         renderer.SetDrawColor();
         window.Clear();
 
         // Renders
+        updateSystem.Render(registry);
 
         window.LimitFrameRate();
         window.Present();
     }
+
     window.CleanUp();
     renderer.CleanUp();
     return 0;

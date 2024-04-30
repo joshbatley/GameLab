@@ -1,7 +1,5 @@
 #include "Renderer.h"
 
-#include <unordered_map>
-
 namespace Renderer {
     Manager::Manager(SDL_Renderer *renderer) : renderer(renderer)
     {
