@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include "Entity.h"
 
 class Player {
 public:
@@ -9,4 +8,13 @@ public:
     void Update();
 private:
     int _id = 0;
+};
+
+
+class Player2 {
+public:
+    Player2(int id);
+    void Update();
+private:
+    int _id2 = 2;
 };

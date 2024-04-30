@@ -2,5 +2,6 @@
 
 
 class RenderableComponent {
-
+public:
+    bool isRenderable = true;
 };
