@@ -4,26 +4,29 @@
 #include "WorldManager.h"
 #include <entt/entt.hpp>
 
+
 int main()
 {
     Window::Manager window("Game 3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_RESIZABLE);
     Renderer::Manager renderer(window.GetRenderer());
 
+    renderer.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
+
     entt::registry registry;
 
-    Input::Manager inputManager;
+    Input::Manager input;
     TimeManager timeManager;
 
-    WorldManager worldManager;
+    WorldManager worldManager(registry);
     Systems updateSystem;
 
-    worldManager.Init(registry);
+    worldManager.Init();
 
     bool isRunning = true;
     while (isRunning) {
         window.FrameStart();
         timeManager.Update(SDL_GetTicks());
-        inputManager.Update();
+        input.Update();
 
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
@@ -32,17 +35,17 @@ int main()
                     isRunning = false;
                     break;
             }
-            inputManager.ProcessEvents(&event);
+            input.ProcessEvents(&event);
         }
 
         // Updates
         updateSystem.Update(registry);
 
+        // Renders
         renderer.SetDrawColor();
         window.Clear();
 
-        // Renders
-        updateSystem.Render(registry);
+        updateSystem.Render(registry, renderer);
 
         window.LimitFrameRate();
         window.Present();

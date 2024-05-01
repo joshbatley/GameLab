@@ -1,12 +1,23 @@
 #include "WorldManager.h"
 
-WorldManager::WorldManager()
+WorldManager::WorldManager(entt::registry &reg) : _reg(reg)
 {
+    _noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 }
 
-void WorldManager::Init(entt::registry &reg)
+void WorldManager::Init()
 {
-    auto ent = reg.create();
-    reg.emplace<Player>(ent, 1);
-    reg.emplace<RenderedComponent>(ent);
+    WorldManager::_loadLevel();
+}
+
+void WorldManager::_loadLevel()
+{
+    for (int y = 0; y < 128; y++)
+    {
+        for (int x = 0; x < 128; x++)
+        {
+            auto ent = _reg.create();
+            _reg.emplace<Tile>(ent, x, y);
+        }
+    }
 }
