@@ -55,4 +55,4 @@ namespace Window {
             SDL_Delay(frame_delay - frame_time);
         }
     }
-}// namespace Window
+}

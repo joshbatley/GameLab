@@ -80,4 +80,4 @@ namespace Input
 
         InputAction lookUpAction(SDL_Scancode code);
     };
-} // namespace Input
+}

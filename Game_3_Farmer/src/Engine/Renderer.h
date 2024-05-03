@@ -24,4 +24,4 @@ namespace Renderer {
         std::unordered_map<std::string, TTF_Font *> fontMap;
         std::unordered_map<std::string, SDL_Texture *> textureMap;
     };
-}// namespace Renderer
+}

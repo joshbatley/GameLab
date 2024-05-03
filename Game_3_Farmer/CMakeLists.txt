@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 find_library(FastNoise
         NAMES FastNoise
@@ -27,6 +26,7 @@ add_executable(Game_3_Farmer src/main.cpp
         src/WorldManager.h
         src/TimeManager.cpp
         src/TimeManager.h
+        src/Utils/Vectors.h
 )
 
 target_link_libraries(Game_3_Farmer PRIVATE
@@ -35,5 +35,4 @@ target_link_libraries(Game_3_Farmer PRIVATE
         SDL2_image::SDL2_image-static
         SDL2_ttf::SDL2_ttf-static
         EnTT::EnTT
-        glm::glm
 )

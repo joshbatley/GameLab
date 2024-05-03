@@ -57,4 +57,4 @@ namespace Renderer {
     {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     }
-}// namespace Renderer
+}

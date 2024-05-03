@@ -25,4 +25,4 @@ namespace Window {
         SDL_Window *window;
         Uint32 frameStart = 0;
     };
-}// namespace Window
+}
