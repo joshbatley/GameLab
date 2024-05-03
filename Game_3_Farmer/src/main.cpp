@@ -6,7 +6,7 @@
 
 int main()
 {
-    Window::Manager window("Game 3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_RESIZABLE);
+    Window::Manager window("Game 3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_RESIZABLE);
     Renderer::Manager renderer(window.GetRenderer());
 
     renderer.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
@@ -17,7 +17,7 @@ int main()
     TimeManager timeManager;
 
     WorldManager worldManager(registry);
-    Systems updateSystem;
+    Systems updateSystem(input);
 
     worldManager.Init();
 

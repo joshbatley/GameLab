@@ -5,7 +5,7 @@ std::unordered_map<Type, Tile> setupTileTypes() {
 
     types[Type::Water] = Tile();
     types[Type::Water].type = Type::Water;
-    types[Type::Water].src = {0,0};
+    types[Type::Water].src = {1 * 16,1*16};
 
     types[Type::Land] = Tile();
     types[Type::Land].type = Type::Land;

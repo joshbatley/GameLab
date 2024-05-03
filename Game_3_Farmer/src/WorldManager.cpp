@@ -17,15 +17,17 @@ WorldManager::WorldManager(entt::registry &reg) : _reg(reg)
 
 void WorldManager::Init()
 {
+    auto cam = _reg.create();
+    _reg.emplace<Camera>(cam);
     WorldManager::_loadLevel();
 }
 
 void WorldManager::_loadLevel()
 {
     auto t = setupTileTypes();
-    for (int y = 0; y < 128; y++)
+    for (int y = 0; y < _worldSizeY; y++)
     {
-        for (int x = 0; x < 128; x++)
+        for (int x = 0; x < _worldSizeX; x++)
         {
             auto q = _noise.GetNoise((float)x, (float)y);
             auto ent = _reg.create();

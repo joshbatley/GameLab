@@ -12,6 +12,8 @@ namespace Input {
             {SDL_SCANCODE_S, InputAction::DOWN},
             {SDL_SCANCODE_A, InputAction::LEFT},
             {SDL_SCANCODE_D, InputAction::RIGHT},
+            {SDL_SCANCODE_Q, InputAction::ACTION1},
+            {SDL_SCANCODE_E, InputAction::ACTION2}
         };
     }
 

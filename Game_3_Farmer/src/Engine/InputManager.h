@@ -13,6 +13,8 @@ namespace Input
         DOWN,
         LEFT,
         RIGHT,
+        ACTION1,
+        ACTION2,
         // META
         COUNT,
     };

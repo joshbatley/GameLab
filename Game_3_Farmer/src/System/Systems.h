@@ -6,6 +6,9 @@
 
 class Systems {
 public:
+    Systems(Input::Manager &input) : _input(input) {}
     void Update(entt::registry &reg);
     void Render(entt::registry &reg, Renderer::Manager &render);
+private:
+    Input::Manager &_input;
 };
