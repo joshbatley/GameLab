@@ -20,11 +20,11 @@ void Systems::Update(entt::registry &reg)
     }
 
     if(_input.IsActionDown(Input::InputAction::ACTION1)) {
-        camera.scale += camera.scale+1 == 16 ? 0 : 1;
+        camera.scale += camera.scale+1 >= 16 ? 0 : 1;
     }
 
     if(_input.IsActionDown(Input::InputAction::ACTION2)) {
-        camera.scale -= camera.scale-1 == 4 ? 0: 1;
+        camera.scale -= camera.scale - 1 <= 4 ? 0: 1;
     }
 
 }

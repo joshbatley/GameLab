@@ -10,16 +10,13 @@ int main()
     Renderer::Manager renderer(window.GetRenderer());
 
     renderer.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
-
-    entt::registry registry;
-
     Input::Manager input;
     TimeManager timeManager;
 
-    WorldManager worldManager(registry);
+    WorldManager worldManager;
     Systems updateSystem(input);
 
-    worldManager.Init();
+    worldManager.LoadLevel();
 
     bool isRunning = true;
     while (isRunning) {
@@ -37,14 +34,18 @@ int main()
             input.ProcessEvents(&event);
         }
 
+        if (input.IsActionPressed(Input::ACTION3)) {
+            worldManager.LoadLevel();
+        }
+
         // Updates
-        updateSystem.Update(registry);
+        updateSystem.Update(worldManager.GetReg());
 
         // Renders
         renderer.SetDrawColor();
         window.Clear();
 
-        updateSystem.Render(registry, renderer);
+        updateSystem.Render(worldManager.GetReg(), renderer);
 
         window.LimitFrameRate();
         window.Present();

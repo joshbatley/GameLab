@@ -1,22 +1,22 @@
 #include "WorldManager.h"
 
-#include <ctime>
-#include <random>
-
 int GenerateRandomSeed() {
     std::random_device rd;
     std::mt19937 gen(rd());
     return gen();
 }
 
-WorldManager::WorldManager(entt::registry &reg) : _reg(reg)
+WorldManager::WorldManager()
 {
     _noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
     _noise.SetSeed(GenerateRandomSeed());
 }
 
-void WorldManager::Init()
+void WorldManager::LoadLevel()
 {
+    _reg = entt::registry();
+    _noise.SetSeed(GenerateRandomSeed());
+
     auto cam = _reg.create();
     _reg.emplace<Camera>(cam);
     WorldManager::_loadLevel();
@@ -40,3 +40,8 @@ void WorldManager::_loadLevel()
         }
     }
 }
+entt::registry& WorldManager::GetReg()
+{
+    return _reg;
+}
+
