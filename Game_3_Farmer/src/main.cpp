@@ -4,7 +4,6 @@
 #include "WorldManager.h"
 #include <entt/entt.hpp>
 
-
 int main()
 {
     Window::Manager window("Game 3", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_RESIZABLE);
