@@ -10,8 +10,9 @@
 class WorldManager {
 public:
     WorldManager();
+
     void LoadNewLevel();
-    void LoadLevel();
+    void Update();
     entt::registry& GetReg();
 
 private:
@@ -19,5 +20,6 @@ private:
     std::array<std::array<std::array<float, 64>, 64>, 5> _chunks = {{}}; // 0 - center, NESW - 1234
     entt::registry _reg;
     FastNoiseLite _noise;
+
     void _loadLevel();
 };

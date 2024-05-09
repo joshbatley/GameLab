@@ -16,8 +16,6 @@ int main()
     WorldManager worldManager;
     Systems updateSystem(input);
 
-    worldManager.LoadLevel();
-
     bool isRunning = true;
     while (isRunning) {
         window.FrameStart();
@@ -40,9 +38,8 @@ int main()
 
         // Updates
         updateSystem.Update(worldManager.GetReg());
-        worldManager.LoadLevel();
+        worldManager.Update();
 
-        // Renders
         renderer.SetDrawColor();
         window.Clear();
 

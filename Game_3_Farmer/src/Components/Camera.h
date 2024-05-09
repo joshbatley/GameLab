@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Utils/Vectors.h"
+#include "../Engine/Vectors.h"
 
 struct Camera {
     int scale = 8;
     int speed = 1;
-    utils::ivec2 pos = { 0, 0 };
+    Engine::ivec2 pos = { 0, 0 };
 };

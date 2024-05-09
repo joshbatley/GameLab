@@ -26,7 +26,6 @@ add_executable(Game_3_Farmer src/main.cpp
         src/WorldManager.h
         src/TimeManager.cpp
         src/TimeManager.h
-        src/Utils/Vectors.h
 )
 
 target_link_libraries(Game_3_Farmer PRIVATE

@@ -45,7 +45,7 @@ void WorldManager::LoadNewLevel()
     _noise.SetSeed(GenerateRandomSeed());
 }
 
-void WorldManager::LoadLevel()
+void WorldManager::Update()
 {
     WorldManager::_loadLevel();
 }

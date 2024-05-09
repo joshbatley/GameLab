@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include <string>
-#include "../Utils/Vectors.h"
+#include "../Engine/Vectors.h"
 
 const std::string SPRITE_TEXTURE_KEY = "spriteMap";
 
@@ -18,8 +18,8 @@ public:
     Tile();
     int Size = 16;
     Type type = DEFAULT;
-    utils::ivec2 src;
-    utils::ivec4 color;
+    Engine::ivec2 src;
+    Engine::color color = {0,0,0,0};
 };
 
 std::unordered_map<Type, Tile> setupTileTypes();

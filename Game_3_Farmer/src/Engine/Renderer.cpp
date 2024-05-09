@@ -34,7 +34,7 @@ namespace Renderer {
         textureMap.insert({key, texture});
     }
 
-    void Manager::RenderText(const char *text, const std::string &key, utils::ivec4 color, utils::ivec4 &dest)
+    void Manager::RenderText(const char *text, const std::string &key, Engine::ivec4 color, Engine::ivec4 &dest)
     {
         const auto font = fontMap[key];
         SDL_Color c = { (Uint8)color.x, (Uint8)color.y, (Uint8)color.z, (Uint8)color.w };
@@ -47,14 +47,14 @@ namespace Renderer {
         SDL_RenderCopy(renderer, message, nullptr, &d);
     }
 
-    void Manager::RenderColor(const utils::ivec4 color, const utils::ivec4 dest)
+    void Manager::RenderColor(const Engine::ivec4 color, const Engine::ivec4 dest)
     {
         SDL_SetRenderDrawColor(renderer, color.x, color.y, color.z, color.w);
         SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};
         SDL_RenderFillRect(renderer, &d);
     }
 
-    void Manager::Render(const std::string &key, const utils::ivec4 src, const utils::ivec4 dest)
+    void Manager::Render(const std::string &key, const Engine::ivec4 src, const Engine::ivec4 dest)
     {
         SDL_Rect s = {src.x, src.y, src.z, src.w};
         SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};
