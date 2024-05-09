@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace Window {
-    constexpr int FRAME_RATE = 60;
+    constexpr int FRAME_RATE = 100;
 
     class Manager {
     public:

@@ -9,7 +9,8 @@ const std::string SPRITE_TEXTURE_KEY = "spriteMap";
 enum Type {
     DEFAULT,
     Water,
-    Land
+    Land,
+    Sand
 };
 
 class Tile {
@@ -21,4 +22,3 @@ public:
 };
 
 std::unordered_map<Type, Tile> setupTileTypes();
-

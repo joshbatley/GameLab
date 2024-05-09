@@ -47,10 +47,15 @@ namespace Renderer {
         SDL_RenderCopy(renderer, message, nullptr, &dest);
     }
 
+    void Manager::RenderColor(const SDL_Color color, const SDL_Rect dest)
+    {
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderFillRect(renderer, &dest);
+    }
+
     void Manager::Render(const std::string &key, const SDL_Rect src, const SDL_Rect dest)
     {
-        const auto texture = textureMap[key];
-        SDL_RenderCopy(renderer, texture, &src, &dest);
+        SDL_RenderCopy(renderer, textureMap[key], &src, &dest);
     }
 
     void Manager::SetDrawColor() const

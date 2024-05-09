@@ -2,7 +2,6 @@
 #include "System/Systems.h"
 #include "TimeManager.h"
 #include "WorldManager.h"
-#include <entt/entt.hpp>
 
 int main()
 {
@@ -10,6 +9,7 @@ int main()
     Renderer::Manager renderer(window.GetRenderer());
 
     renderer.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
+
     Input::Manager input;
     TimeManager timeManager;
 
@@ -35,11 +35,13 @@ int main()
         }
 
         if (input.IsActionPressed(Input::ACTION3)) {
-            worldManager.LoadLevel();
+            worldManager.LoadNewLevel();
         }
 
         // Updates
         updateSystem.Update(worldManager.GetReg());
+
+        worldManager.LoadLevel();
 
         // Renders
         renderer.SetDrawColor();
