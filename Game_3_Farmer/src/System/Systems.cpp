@@ -43,7 +43,7 @@ void Systems::Render(entt::registry &reg, Renderer::Manager &render)
     view.each([&reg, &render, &camera](auto entity, Tile &tile) {
         Position e = reg.get<Position>(entity);
 
-        SDL_Rect dest = {
+        utils::ivec4 dest = {
           (e.Dest.x + camera.pos.x) * camera.scale,
           (e.Dest.y + camera.pos.y) * camera.scale,
           camera.scale,
@@ -65,7 +65,7 @@ void Systems::Render(entt::registry &reg, Renderer::Manager &render)
                     break;
             }
         } else {
-            SDL_Rect src = {tile.src.x, tile.src.y, tile.Size, tile.Size};
+            utils::ivec4 src = {tile.src.x, tile.src.y, tile.Size, tile.Size};
             render.Render(SPRITE_TEXTURE_KEY, src, dest);
         }
     });

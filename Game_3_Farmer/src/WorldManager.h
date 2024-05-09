@@ -17,8 +17,6 @@ public:
 private:
     int _chunkSize = 64;
     std::array<std::array<std::array<float, 64>, 64>, 5> _chunks = {{}}; // 0 - center, NESW - 1234
-    int _worldSizeX = 80 * 10;
-    int _worldSizeY = 45 * 100;
     entt::registry _reg;
     FastNoiseLite _noise;
     void _loadLevel();

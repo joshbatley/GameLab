@@ -19,6 +19,7 @@ public:
     int Size = 16;
     Type type = DEFAULT;
     utils::ivec2 src;
+    utils::ivec4 color;
 };
 
 std::unordered_map<Type, Tile> setupTileTypes();

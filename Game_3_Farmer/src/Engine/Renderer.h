@@ -5,7 +5,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <unordered_map>
-#include "../Components/Components.h"
+#include "../Utils/Vectors.h"
 
 namespace Renderer {
     class Manager {
@@ -16,9 +16,9 @@ namespace Renderer {
         void LoadFont(std::string key, const char *path, int size);
         void LoadTexture(std::string key, const char *path);
 
-        void RenderText(const char *text, const std::string &key, SDL_Color color, SDL_Rect &dest);
-        void RenderColor(const SDL_Color color, const SDL_Rect dest);
-        void Render(const std::string &key, SDL_Rect src, SDL_Rect dest);
+        void RenderText(const char *text, const std::string &key, utils::ivec4 color, utils::ivec4 &dest);
+        void RenderColor(const utils::ivec4 color, const utils::ivec4 dest);
+        void Render(const std::string &key, utils::ivec4 src, utils::ivec4 dest);
         void SetDrawColor() const;
 
     private:

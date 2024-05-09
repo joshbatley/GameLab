@@ -34,28 +34,31 @@ namespace Renderer {
         textureMap.insert({key, texture});
     }
 
-    void Manager::RenderText(const char *text, const std::string &key, const SDL_Color color, SDL_Rect &dest)
+    void Manager::RenderText(const char *text, const std::string &key, utils::ivec4 color, utils::ivec4 &dest)
     {
         const auto font = fontMap[key];
-        SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, color);
+        SDL_Color c = { (Uint8)color.x, (Uint8)color.y, (Uint8)color.z, (Uint8)color.w };
+        SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, c);
         if (surface == nullptr) {
             std::cout << "Font not loaded for " << font << std::endl;
         }
         SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surface);
-        dest.w = surface->w;
-        dest.h = surface->h;
-        SDL_RenderCopy(renderer, message, nullptr, &dest);
+        SDL_Rect d = { dest.x, dest.y, surface->w, surface->h };
+        SDL_RenderCopy(renderer, message, nullptr, &d);
     }
 
-    void Manager::RenderColor(const SDL_Color color, const SDL_Rect dest)
+    void Manager::RenderColor(const utils::ivec4 color, const utils::ivec4 dest)
     {
-        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        SDL_RenderFillRect(renderer, &dest);
+        SDL_SetRenderDrawColor(renderer, color.x, color.y, color.z, color.w);
+        SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};
+        SDL_RenderFillRect(renderer, &d);
     }
 
-    void Manager::Render(const std::string &key, const SDL_Rect src, const SDL_Rect dest)
+    void Manager::Render(const std::string &key, const utils::ivec4 src, const utils::ivec4 dest)
     {
-        SDL_RenderCopy(renderer, textureMap[key], &src, &dest);
+        SDL_Rect s = {src.x, src.y, src.z, src.w};
+        SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};
+        SDL_RenderCopy(renderer, textureMap[key], &s, &d);
     }
 
     void Manager::SetDrawColor() const

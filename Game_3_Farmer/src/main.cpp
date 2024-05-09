@@ -40,7 +40,6 @@ int main()
 
         // Updates
         updateSystem.Update(worldManager.GetReg());
-
         worldManager.LoadLevel();
 
         // Renders
