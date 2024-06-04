@@ -8,47 +8,48 @@ namespace Window {
             return;
         }
 
-        window = SDL_CreateWindow(title, x, y, w, h, flags);
-        if (window == nullptr) {
+        _window = SDL_CreateWindow(title, x, y, w, h, flags);
+        if (_window == nullptr) {
             std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
             return;
         }
 
-        renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-        if (renderer == nullptr) {
+        _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+        if (_renderer == nullptr) {
             std::cout << "Renderer failed to init. Error: " << SDL_GetError() << std::endl;
             return;
         }
 
         SDL_ShowCursor(SDL_DISABLE);
+        SDL_SetRelativeMouseMode(SDL_TRUE);
     }
 
     void Manager::Clear() const
     {
-        SDL_RenderClear(renderer);
+        SDL_RenderClear(_renderer);
     }
 
     void Manager::Present() const
     {
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent(_renderer);
     }
 
     void Manager::CleanUp() const
     {
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
+        SDL_DestroyRenderer(_renderer);
+        SDL_DestroyWindow(_window);
         SDL_Quit();
     }
 
     void Manager::FrameStart()
     {
-        frameStart = SDL_GetTicks();
+        _frameStart = SDL_GetTicks();
     }
 
     void Manager::LimitFrameRate() const
     {
         const Uint32 frame_end = SDL_GetTicks();
-        const Uint32 frame_time = frame_end - frameStart;
+        const Uint32 frame_time = frame_end - _frameStart;
         constexpr int frame_delay = 1000 / FRAME_RATE;
 
         if (frame_time < frame_delay) {

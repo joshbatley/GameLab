@@ -1,11 +1,11 @@
 #pragma once
 
+#include "./Vectors.h"
 #include <SDL_image.h>
 #include <SDL_render.h>
 #include <SDL_ttf.h>
 #include <iostream>
 #include <unordered_map>
-#include "./Vectors.h"
 
 namespace Renderer {
     class Manager {
@@ -22,8 +22,8 @@ namespace Renderer {
         void SetDrawColor() const;
 
     private:
-        SDL_Renderer *renderer;
-        std::unordered_map<std::string, TTF_Font *> fontMap;
-        std::unordered_map<std::string, SDL_Texture *> textureMap;
+        SDL_Renderer *_renderer;
+        std::unordered_map<std::string, TTF_Font *> _fontMap;
+        std::unordered_map<std::string, SDL_Texture *> _textureMap;
     };
 }

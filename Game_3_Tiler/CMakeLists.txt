@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(Game_3_Farmer)
+project(Game_3_Tiler)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -17,18 +17,18 @@ include_directories(lib)
 file(GLOB ENGINE src/Engine/*.cpp src/Engine/*.h)
 file(GLOB COMPONENTS src/Components/*.cpp src/Components/*.h)
 file(GLOB SYSTEMS src/System/*.cpp src/System/*.h)
+file(GLOB UTILS src/Utils/*.cpp src/Utils/*.h)
 
-add_executable(Game_3_Farmer src/main.cpp
+add_executable(Game_3_Tiler src/main.cpp
         ${ENGINE}
         ${COMPONENTS}
         ${SYSTEMS}
-        src/WorldManager.cpp
-        src/WorldManager.h
+        ${UTILS}
         src/TimeManager.cpp
         src/TimeManager.h
 )
 
-target_link_libraries(Game_3_Farmer PRIVATE
+target_link_libraries(Game_3_Tiler PRIVATE
         SDL2::SDL2main
         SDL2::SDL2-static
         SDL2_image::SDL2_image-static

@@ -17,12 +17,12 @@ namespace Window {
 
         SDL_Renderer *GetRenderer() const
         {
-            return renderer;
+            return _renderer;
         }
 
     private:
-        SDL_Renderer *renderer;
-        SDL_Window *window;
-        Uint32 frameStart = 0;
+        SDL_Renderer *_renderer;
+        SDL_Window *_window;
+        Uint32 _frameStart = 0;
     };
 }
