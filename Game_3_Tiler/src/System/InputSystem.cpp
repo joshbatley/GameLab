@@ -12,22 +12,22 @@ void CursorUpdate(entt::registry &reg, Input::Manager input)
     }
 }
 
-void GenerateNewMap(entt::registry &reg, Input::Manager input)
+void GenerateNewMap(entt::registry &reg, Dispatcher &dispatcher, Input::Manager input)
 {
     Noise &noise = Noise::getInstance();
     if (input.IsActionPressed(Input::ACTION3)) {
         noise.SetRandomSeed();
+        dispatcher.EnqueueEvent<ReloadEvent>(ReloadEvent {});
     }
 }
 
-void UpdateTile(entt::registry &reg, Input::Manager input)
+void UpdateTile(entt::registry &reg, Dispatcher &dispatcher, Input::Manager input)
 {
-    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
+    Cursor &cursor = reg.get<Cursor>(reg.view<Cursor>().front());
     if (input.IsActionDown(Input::ACTION1)) {
-        auto x = input.GetMousePosition().x / TileSize::Size;
-        auto y = input.GetMousePosition().y / TileSize::Size;
-        auto tile = tileArray.Tiles[y][x];
-        tile->src = TileTypes.at(Land).src;
+        auto x = cursor.Pos.x;
+        auto y = cursor.Pos.y;
+        dispatcher.EnqueueEvent<UpdateTileEvent>(UpdateTileEvent {x, y});
     }
 }
 

@@ -50,23 +50,23 @@ namespace Input {
                 const auto IsMouseEvent = event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEBUTTONUP;
                 const auto action = IsMouseEvent ? InputAction::ACTION1 : _controlMap[event->key.keysym.scancode];
                 const bool down = event->type == SDL_KEYDOWN || event->type == SDL_MOUSEBUTTONDOWN;
-                uint8_t newstate = INPUT_PRESENT;
+                uint8_t newState = INPUT_PRESENT;
                 _buttons[action].time = now;
 
                 if (down) {
                     if (!_buttons[action].IsDown()) {
-                        newstate |= INPUT_PRESS;
+                        newState |= INPUT_PRESS;
                     }
-                    newstate |= INPUT_DOWN;
+                    newState |= INPUT_DOWN;
                 } else {
-                    newstate |= INPUT_UP;
+                    newState |= INPUT_UP;
                 }
 
-                if (newstate & (INPUT_PRESS | INPUT_UP)) {
+                if (newState & (INPUT_PRESS | INPUT_UP)) {
                     _buttonsToClear.push_back(action);
                 }
 
-                _buttons[action].state = newstate;
+                _buttons[action].state = newState;
                 break;
             }
             case SDL_MOUSEMOTION:

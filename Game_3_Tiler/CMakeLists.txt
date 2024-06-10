@@ -30,6 +30,8 @@ add_executable(Game_3_Tiler src/main.cpp
         src/AssetManager.h
         src/Utils/Noise.cpp
         src/Utils/Noise.h
+        src/Dispatcher.cpp
+        src/Dispatcher.h
 )
 
 target_link_libraries(Game_3_Tiler PRIVATE

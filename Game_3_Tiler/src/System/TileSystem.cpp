@@ -24,13 +24,18 @@ void TileSystem::Setup(entt::registry &reg, Asset::Manager asset)
     }
     //    _generateNoise(tileArray);
 }
-
-void TileSystem::Update(entt::registry &reg)
+void TileSystem::ReloadWorld(entt::registry &reg, ReloadEvent reloadEvent)
 {
     TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
-    //    _generateNoise(tileArray);
+    _generateNoise(tileArray);
 }
 
+void TileSystem::UpdateTile(entt::registry &reg, UpdateTileEvent ev)
+{
+    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
+    auto tile = tileArray.Tiles[ev.y][ev.x];
+    tile->src = TileTypes.at(Land).src;
+}
 
 void TileSystem::Render(entt::registry &reg, Renderer::Manager &render)
 {
