@@ -24,8 +24,12 @@ add_executable(Game_3_Tiler src/main.cpp
         ${COMPONENTS}
         ${SYSTEMS}
         ${UTILS}
-        src/TimeManager.cpp
-        src/TimeManager.h
+        src/App.cpp
+        src/App.h
+        src/AssetManager.cpp
+        src/AssetManager.h
+        src/Utils/Noise.cpp
+        src/Utils/Noise.h
 )
 
 target_link_libraries(Game_3_Tiler PRIVATE

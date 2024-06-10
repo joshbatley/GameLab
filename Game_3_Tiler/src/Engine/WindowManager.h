@@ -9,9 +9,10 @@ namespace Window {
     class Manager {
     public:
         Manager(const char *title, int x, int y, int w, int h, Uint32 flags);
+        ~Manager();
+        
         void Clear() const;
         void Present() const;
-        void CleanUp() const;
         void FrameStart();
         void LimitFrameRate() const;
 

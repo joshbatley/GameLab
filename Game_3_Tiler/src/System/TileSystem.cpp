@@ -1,62 +1,62 @@
 #include "TileSystem.h"
+#include "../Utils/Noise.h"
 
-TileSystem::TileSystem()
+void TileSystem::Setup(entt::registry &reg, Asset::Manager asset)
 {
-    _noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-    _noise.SetSeed(TileSystem::_generateRandomSeed());
-}
-
-void TileSystem::Setup(entt::registry &reg)
-{
+    Noise &noise = Noise::getInstance();
     reg.emplace<TileArray>(reg.create());
     TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
-    _generateNoise(tileArray);
+    for (int y = 0; y < TileSize::Y; y++) {
+        for (int x = 0; x < TileSize::X; x++) {
+            auto &tile = reg.emplace<Tile>(reg.create());
+            tileArray.Tiles[y][x] = &tile;
+            tile.dest = {x, y};
+            tile.data = noise.GetNoise((float)x, (float)y);
+            tile.texture = asset.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
+            if (tile.data > 0.2f) {
+                tile.src = TileTypes.at(Land).src;
+            } else if (tile.data > 0.1f) {
+                tile.src = TileTypes.at(Sand).src;
+            } else {
+                tile.src = TileTypes.at(Water).src;
+            }
+        }
+    }
+    //    _generateNoise(tileArray);
 }
 
 void TileSystem::Update(entt::registry &reg)
 {
     TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
-    _noise.SetSeed(TileSystem::_generateRandomSeed());
-    _generateNoise(tileArray);
+    //    _generateNoise(tileArray);
 }
 
 
 void TileSystem::Render(entt::registry &reg, Renderer::Manager &render)
 {
-    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
-    for (int y = 0; y < TileSize::Y; y++) {
-        for (int x = 0; x < TileSize::X; x++) {
-            auto noisePoint = tileArray.Tiles[y][x];
-
-            Tile tile;
-            if (noisePoint > 0.2f) {
-                tile = TileTypes.at(Land);
-            } else if (noisePoint > 0.1f) {
-                tile = TileTypes.at(Sand);
-            } else {
-                tile = TileTypes.at(Water);
-            }
-
-            Engine::ivec4 dest = {x * TileSize::Size, y * TileSize::Size, TileSize::Size, TileSize::Size};
-            Engine::ivec4 src = {tile.src.x, tile.src.y, 16, 16};
-
-            render.Render(SPRITE_TEXTURE_KEY, src, dest);
-        }
+    auto view = reg.view<Tile>();
+    for (auto entity: view) {
+        auto tile = view.get<Tile>(entity);
+        Engine::ivec4 dest = {tile.dest.x * TileSize::Size, tile.dest.y * TileSize::Size, TileSize::Size, TileSize::Size};
+        Engine::ivec4 src = {tile.src.x, tile.src.y, 16, 16};
+        render.Render(tile.texture, src, dest);
     }
 }
 
 void TileSystem::_generateNoise(TileArray &tileArray)
 {
+    Noise &noise = Noise::getInstance();
     for (int y = 0; y < TileSize::Y; y++) {
         for (int x = 0; x < TileSize::X; x++) {
-            tileArray.Tiles[y][x] = _noise.GetNoise((float)x, (float)y);
+            auto tile = tileArray.Tiles[y][x];
+            tile->data = noise.GetNoise((float)x, (float)y);
+            if (tile->data > 0.2f) {
+                tile->src = TileTypes.at(Land).src;
+            } else if (tile->data > 0.1f) {
+                tile->src = TileTypes.at(Sand).src;
+            } else {
+                tile->src = TileTypes.at(Water).src;
+            }
         }
     }
-}
-
-int TileSystem::_generateRandomSeed()
-{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    return gen();
 }

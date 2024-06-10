@@ -24,6 +24,13 @@ namespace Window {
         SDL_SetRelativeMouseMode(SDL_TRUE);
     }
 
+    Manager::~Manager()
+    {
+        SDL_DestroyRenderer(_renderer);
+        SDL_DestroyWindow(_window);
+        SDL_Quit();
+    }
+
     void Manager::Clear() const
     {
         SDL_RenderClear(_renderer);
@@ -32,13 +39,6 @@ namespace Window {
     void Manager::Present() const
     {
         SDL_RenderPresent(_renderer);
-    }
-
-    void Manager::CleanUp() const
-    {
-        SDL_DestroyRenderer(_renderer);
-        SDL_DestroyWindow(_window);
-        SDL_Quit();
     }
 
     void Manager::FrameStart()

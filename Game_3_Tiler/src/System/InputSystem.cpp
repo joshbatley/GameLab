@@ -1,22 +1,8 @@
 #include "InputSystem.h"
 
-
-void InputSystem::Update(entt::registry &reg, entt::dispatcher &dispatcher)
+void CursorUpdate(entt::registry &reg, Input::Manager input)
 {
-    if (_input.IsActionDown(Input::ACTION1)) {
-        auto x = _input.GetMousePosition().x / TileSize::Size;
-        auto y = _input.GetMousePosition().y / TileSize::Size;
-        dispatcher.enqueue<MouseEvent>(x, y);
-        //        tileArray.Tiles[y][x] = 1;
-    }
-
-    if (_input.IsActionPressed(Input::ACTION3)) {
-
-        dispatcher.enqueue<ReloadEvent>(4);
-    }
-
-    auto [mouseX, mouseY] = _input.GetMousePosition();
-
+    auto [mouseX, mouseY] = input.GetMousePosition();
     auto entities = reg.view<Cursor>();
     for (auto ent: entities) {
         auto &cursor = reg.get<Cursor>(ent);
@@ -24,4 +10,30 @@ void InputSystem::Update(entt::registry &reg, entt::dispatcher &dispatcher)
         auto y = lerp(cursor.Pos.y, mouseY / TileSize::Size, cursor.Speed);
         cursor.Pos = {x, y};
     }
+}
+
+void GenerateNewMap(entt::registry &reg, Input::Manager input)
+{
+    Noise &noise = Noise::getInstance();
+    if (input.IsActionPressed(Input::ACTION3)) {
+        noise.SetRandomSeed();
+    }
+}
+
+void UpdateTile(entt::registry &reg, Input::Manager input)
+{
+    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
+    if (input.IsActionDown(Input::ACTION1)) {
+        auto x = input.GetMousePosition().x / TileSize::Size;
+        auto y = input.GetMousePosition().y / TileSize::Size;
+        auto tile = tileArray.Tiles[y][x];
+        tile->src = TileTypes.at(Land).src;
+    }
+}
+
+void InputSystem::Plugin(App *app)
+{
+    app->AddSystem(UPDATE, GenerateNewMap)
+      .AddSystem(UPDATE, CursorUpdate)
+      .AddSystem(UPDATE, UpdateTile);
 }

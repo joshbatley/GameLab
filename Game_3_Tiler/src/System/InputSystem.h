@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../App.h"
 #include "../Components/Components.h"
 #include "../Engine/Engine.h"
 #include "../Utils/Utils.h"
@@ -16,10 +17,5 @@ struct ReloadEvent {
 
 class InputSystem {
 public:
-    explicit InputSystem(Input::Manager &input)
-        : _input(input) {}
-    void Update(entt::registry &reg, entt::dispatcher &dispatcher);
-
-private:
-    Input::Manager &_input;
+    static void Plugin(App *app);
 };

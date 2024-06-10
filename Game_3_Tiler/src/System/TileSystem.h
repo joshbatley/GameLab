@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../AssetManager.h"
 #include "../Components/Components.h"
 #include "../Engine/Engine.h"
 #include "../System/InputSystem.h"
@@ -10,13 +11,10 @@
 
 class TileSystem final {
 public:
-    TileSystem();
-    void Setup(entt::registry &reg);
-    void Update(entt::registry &reg);
-    void Render(entt::registry &reg, Renderer::Manager &render);
+    static void Setup(entt::registry &reg, Asset::Manager asset);
+    static void Update(entt::registry &reg);
+    static void Render(entt::registry &reg, Renderer::Manager &render);
 
 private:
-    void _generateNoise(TileArray &tileArray);
-    static int _generateRandomSeed();
-    FastNoiseLite _noise;
+    static void _generateNoise(TileArray &tileArray);
 };

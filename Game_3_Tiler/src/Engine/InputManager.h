@@ -54,7 +54,7 @@ namespace Input {
     public:
         Manager();
         void Update();
-        void ProcessEvents(const SDL_Event *event);
+        void ProcessEvents(bool *isRunning);
         bool IsActionPressed(InputAction action) const;
         bool IsActionDown(InputAction action) const;
         bool IsActionUp(InputAction action) const;
@@ -65,5 +65,6 @@ namespace Input {
         MousePosition _mousePosition;
         KeyEvent _buttons[COUNT];
         std::vector<InputAction> _buttonsToClear;
+        void _processEvents(const SDL_Event *event);
     };
 }

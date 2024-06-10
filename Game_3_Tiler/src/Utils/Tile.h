@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Engine/Engine.h"
 #include "../Engine/Vectors.h"
 #include <string>
 #include <unordered_map>
@@ -16,7 +17,10 @@ enum Type {
 struct Tile {
     Type type = DEFAULT;
     Engine::ivec2 src;
+    Engine::ivec2 dest;
     int Size = 16;
+    float data;
+    Texture texture;
 };
 
 const std::unordered_map<Type, Tile> TileTypes {
