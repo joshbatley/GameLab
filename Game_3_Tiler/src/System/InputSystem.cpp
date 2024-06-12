@@ -2,22 +2,22 @@
 
 void InputSystem::Plugin(App *app)
 {
-    app->AddSystem(SETUP, InputSystem::SetupCursor)
-      .AddSystem(UPDATE, InputSystem::GenerateNewMap)
-      .AddSystem(UPDATE, InputSystem::CursorUpdate)
-      .AddSystem(UPDATE, InputSystem::UpdateTile);
+    app->AddSystem(System::SETUP, InputSystem::SetupCursor)
+      .AddSystem(System::UPDATE, InputSystem::GenerateNewMap)
+      .AddSystem(System::UPDATE, InputSystem::CursorUpdate)
+      .AddSystem(System::UPDATE, InputSystem::UpdateTile);
 }
 
-void InputSystem::SetupCursor(World &world, Asset::Manager asset)
+void InputSystem::SetupCursor(Engine::World &world, Asset::Manager asset)
 {
     auto ent = world.create();
     world.emplace<Cursor>(ent);
     auto texture = asset.LoadTexture(CURSOR_TEXTURE_KEY, (std::string(SPROUT_LANDS) + "/ui/icons/select.png").c_str());
     world.emplace<Sprite>(ent, texture, Vec::ivec2 {0, 0}, Vec::ivec2 {32, 32});
-    world.emplace<Transform>(ent, Vec::ivec3 {0, 0, 10});
+    world.emplace<Transform>(ent, Vec::ivec3 {0, 0, 10}, Vec::ivec3 {TileSize::Size, TileSize::Size, 0});
 }
 
-void InputSystem::CursorUpdate(World &world, Input::Manager input)
+void InputSystem::CursorUpdate(Engine::World &world, Input::Manager input)
 {
     auto [mouseX, mouseY] = input.GetMousePosition();
     auto view = world.view<Cursor, Transform>();
@@ -27,7 +27,7 @@ void InputSystem::CursorUpdate(World &world, Input::Manager input)
     }
 }
 
-void InputSystem::GenerateNewMap(World &world, Dispatcher &dispatcher, Input::Manager input)
+void InputSystem::GenerateNewMap(Engine::World &world, Dispatcher &dispatcher, Input::Manager input)
 {
     Noise &noise = Noise::getInstance();
     if (input.IsActionPressed(Input::ACTION3)) {
@@ -36,7 +36,7 @@ void InputSystem::GenerateNewMap(World &world, Dispatcher &dispatcher, Input::Ma
     }
 }
 
-void InputSystem::UpdateTile(World &world, Dispatcher &dispatcher, Input::Manager input)
+void InputSystem::UpdateTile(Engine::World &world, Dispatcher &dispatcher, Input::Manager input)
 {
     auto view = world.view<Cursor, Transform>();
     for (auto ent: view) {

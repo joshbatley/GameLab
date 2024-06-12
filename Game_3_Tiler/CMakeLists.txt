@@ -3,7 +3,20 @@ project(Game_3_Tiler)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(Engine)
+#add_subdirectory(src/Engine)
+
+file(GLOB_RECURSE ENGINE_SOURCES "src/Engine/*.cpp" "src/Engine/**/*.cpp")
+file(GLOB_RECURSE ENGINE_HEADERS "src/Engine/*.h" "src/Engine/**/*.h")
+add_library(Engine ${ENGINE_SOURCES} ${ENGINE_HEADERS}
+        src/Engine/Alias.h)
+
+target_link_libraries(Engine PRIVATE
+        SDL2::SDL2main
+        SDL2::SDL2-static
+        SDL2_image::SDL2_image-static
+        SDL2_ttf::SDL2_ttf-static
+        EnTT::EnTT
+)
 
 file(GLOB COMPONENTS src/Components/*.cpp src/Components/*.h)
 file(GLOB SYSTEMS src/System/*.cpp src/System/*.h)
@@ -23,6 +36,7 @@ add_executable(Game_3_Tiler src/main.cpp
         ${UTILS}
         src/Events.h
 )
+
 
 target_link_libraries(Game_3_Tiler PRIVATE
         Engine

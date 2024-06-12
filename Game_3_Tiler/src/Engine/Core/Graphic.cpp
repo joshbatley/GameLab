@@ -4,7 +4,7 @@ namespace Graphics {
     Manager::Manager(SDL_Renderer *renderer)
         : _renderer(renderer) {}
 
-    void Manager::RenderText(const char *text, Font font, Vec::ivec4 color, Vec::ivec4 &dest)
+    void Manager::RenderText(const char *text, Engine::Font font, Vec::ivec4 color, Vec::ivec4 &dest)
     {
         SDL_Color c = {(Uint8)color.x, (Uint8)color.y, (Uint8)color.z, (Uint8)color.w};
         SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, c);
@@ -23,7 +23,7 @@ namespace Graphics {
         SDL_RenderFillRect(_renderer, &d);
     }
 
-    void Manager::Render(Texture texture, Vec::ivec4 src, const Vec::ivec4 dest)
+    void Manager::Render(Engine::Texture texture, Vec::ivec4 src, const Vec::ivec4 dest)
     {
         SDL_Rect s = {src.x, src.y, src.z, src.w};
         SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};

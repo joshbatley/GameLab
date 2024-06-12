@@ -4,7 +4,9 @@ App::App(const char *title, const int x, const int y, const int w, const int h, 
     : _window(Window::Manager(title, x, y, w, h, flags)),
       _renderer(Graphics::Manager(_window.GetRenderer())),
       _assetManager(Asset::Manager(_window.GetRenderer()))
-{}
+{
+    this->AddSystem(System::RENDER, Render::System);
+}
 
 App &App::AddPlugin(void (*func)(App *))
 {
@@ -12,7 +14,7 @@ App &App::AddPlugin(void (*func)(App *))
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)())
+App &App::AddSystem(System::Schedule schedule, void (*func)())
 {
     _systems[schedule].emplace_back([=] {
         func();
@@ -20,7 +22,7 @@ App &App::AddSystem(Schedule schedule, void (*func)())
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry);
@@ -28,7 +30,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &))
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dispatcher &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _dispatcher);
@@ -36,7 +38,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &))
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &, Asset::Manager))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Asset::Manager))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _assetManager);
@@ -44,7 +46,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &, Asset::Manager))
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &, Input::Manager))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Input::Manager))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _inputManager);
@@ -52,7 +54,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &, Input::Manager))
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &, Input::Manager))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dispatcher &, Input::Manager))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _dispatcher, _inputManager);
@@ -60,7 +62,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &, Input
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &, Graphics::Manager &renderer))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Graphics::Manager &renderer))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _renderer);
@@ -70,7 +72,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &, Graphics::Manager &
 
 void App::Run()
 {
-    for (auto &system: _systems[Schedule::SETUP]) {
+    for (auto &system: _systems[System::Schedule::SETUP]) {
         system();
     }
 
@@ -83,7 +85,7 @@ void App::Run()
         _inputManager.ProcessEvents(&isRunning);
 
         // Loop for update
-        for (auto &system: _systems[Schedule::UPDATE]) {
+        for (auto &system: _systems[System::Schedule::UPDATE]) {
             system();
         }
 
@@ -93,7 +95,7 @@ void App::Run()
         _window.Clear();
 
         // loop for render
-        for (auto &system: _systems[Schedule::RENDER]) {
+        for (auto &system: _systems[System::Schedule::RENDER]) {
             system();
         }
 

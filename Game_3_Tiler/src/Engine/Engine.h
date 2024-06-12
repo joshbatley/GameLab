@@ -7,3 +7,8 @@
 #include "Core/InputManager.h"
 #include "Core/Vectors.h"
 #include "Core/WindowManager.h"
+
+#include "Components/Components.h"
+#include "Systems/Systems.h"
+
+#include "./Alias.h"

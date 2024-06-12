@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Engine.h"
+#include "../Engine/Engine.h"
 #include <string>
 #include <unordered_map>
-
-const std::string SPRITE_TEXTURE_KEY = "spriteMap";
 
 enum Type {
     DEFAULT,
