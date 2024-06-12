@@ -14,7 +14,7 @@ public:
     static void Plugin(App *app);
 
 private:
-    static void Setup(Engine::World &world, Asset::Manager asset);
+    static void Setup(Engine::World &world, Asset::Manager &asset);
     static void ReloadWorld(Engine::World &world, ReloadEvent ev);
     static void UpdateTile(Engine::World &world, UpdateTileEvent ev);
 };

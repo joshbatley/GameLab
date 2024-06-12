@@ -13,5 +13,5 @@ namespace TileSize {
 }
 
 struct TileArray {
-    std::array<std::array<Engine::Entity, TileSize::X>, TileSize::Y> Tiles {};
+    std::array<std::array<Engine::Entity, TileSize::X>, TileSize::Y> tiles {};
 };

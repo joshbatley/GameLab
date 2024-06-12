@@ -1,7 +1,7 @@
 #pragma once
 
 struct Sprite {
-    Engine::Texture Texture {};
-    Vec::ivec2 Src {};
-    Vec::ivec2 Size {};
+    Engine::Texture texture {};
+    Vec::ivec2 src {};
+    Vec::ivec2 size {};
 };

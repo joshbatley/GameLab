@@ -22,9 +22,9 @@ public:
     App &AddSystem(System::Schedule schedule, void (*func)());
     App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world));
     App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Dispatcher &dispatcher));
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Asset::Manager assetServer));
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Input::Manager Input));
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Dispatcher &dispatcher, Input::Manager Input));
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Asset::Manager &assetServer));
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Input::Manager &Input));
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Dispatcher &dispatcher, Input::Manager &Input));
     App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Graphics::Manager &render));
     template<typename EventType>
     App &AddEvent(void (*func)(Engine::World &world, EventType))

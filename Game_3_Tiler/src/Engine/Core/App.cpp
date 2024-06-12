@@ -38,7 +38,7 @@ App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dis
     return *this;
 }
 
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Asset::Manager))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Asset::Manager &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _assetManager);
@@ -46,7 +46,7 @@ App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Ass
     return *this;
 }
 
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Input::Manager))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Input::Manager &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _inputManager);
@@ -54,7 +54,7 @@ App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Inp
     return *this;
 }
 
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dispatcher &, Input::Manager))
+App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dispatcher &, Input::Manager &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _dispatcher, _inputManager);
@@ -76,7 +76,6 @@ void App::Run()
         system();
     }
 
-    // Add loop for setup
     bool isRunning = true;
     while (isRunning) {
         _window.FrameStart();
@@ -84,7 +83,6 @@ void App::Run()
 
         _inputManager.ProcessEvents(&isRunning);
 
-        // Loop for update
         for (auto &system: _systems[System::Schedule::UPDATE]) {
             system();
         }
@@ -94,7 +92,6 @@ void App::Run()
         _renderer.SetDrawColor();
         _window.Clear();
 
-        // loop for render
         for (auto &system: _systems[System::Schedule::RENDER]) {
             system();
         }

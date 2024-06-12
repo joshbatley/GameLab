@@ -5,7 +5,7 @@ void Render::System(Engine::World &world, Graphics::Manager &renderer)
     auto view = world.view<Sprite, Transform>();
     std::vector<Engine::Entity> entities(view.begin(), view.end());
     std::sort(entities.begin(), entities.end(), [&view](Engine::Entity a, Engine::Entity b) {
-        return view.get<Transform>(a).Translate.z < view.get<Transform>(b).Translate.z;
+        return view.get<Transform>(a).translate.z < view.get<Transform>(b).translate.z;
     });
 
     for (auto entity: entities) {
@@ -13,11 +13,11 @@ void Render::System(Engine::World &world, Graphics::Manager &renderer)
         auto sprite = view.get<Sprite>(entity);
 
         Vec::ivec4 dest = {
-          transform.Translate.x * transform.Scale.x,
-          transform.Translate.y * transform.Scale.y,
-          transform.Scale.x, transform.Scale.y};
+          transform.translate.x * transform.scale.x,
+          transform.translate.y * transform.scale.y,
+          transform.scale.x, transform.scale.y};
 
-        Vec::ivec4 src = {sprite.Src.x, sprite.Src.y, sprite.Size.x, sprite.Size.y};
-        renderer.Render(sprite.Texture, src, dest);
+        Vec::ivec4 src = {sprite.src.x, sprite.src.y, sprite.size.x, sprite.size.y};
+        renderer.Render(sprite.texture, src, dest);
     }
 }

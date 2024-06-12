@@ -65,6 +65,7 @@ namespace Input {
         MousePosition _mousePosition;
         KeyEvent _buttons[COUNT];
         std::vector<InputAction> _buttonsToClear;
-        void _processEvents(const SDL_Event *event);
+
+        void ProcessEvents(const SDL_Event *event);
     };
 }

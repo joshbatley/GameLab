@@ -35,11 +35,11 @@ namespace Input {
                     *isRunning = false;
                     break;
             }
-            _processEvents(&event);
+            ProcessEvents(&event);
         }
     }
 
-    void Manager::_processEvents(const SDL_Event *event)
+    void Manager::ProcessEvents(const SDL_Event *event)
     {
         const auto now = std::time(nullptr);
         switch (event->type) {
