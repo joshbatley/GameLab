@@ -1,22 +1,23 @@
 #include "RenderSystem.h"
 
-void RenderSystem::Setup(entt::registry &reg, Asset::Manager manager)
+void RenderSystem::Render(World &world, Renderer::Manager &renderer)
 {
-    auto ent = reg.create();
-    auto &cursor = reg.emplace<Cursor>(ent);
-    reg.emplace<RenderedComponent>(ent);
-    cursor.texture = manager.LoadTexture(CURSOR_TEXTURE_KEY, (std::string(SPROUT_LANDS) + "/ui/icons/select.png").c_str());
-}
+    auto view = world.view<Sprite, Transform>();
+    std::vector<Entity> entities(view.begin(), view.end());
+    std::sort(entities.begin(), entities.end(), [&view](Entity a, Entity b) {
+        return view.get<Transform>(a).Translate.z < view.get<Transform>(b).Translate.z;
+    });
 
-void RenderSystem::Render(entt::registry &reg, Renderer::Manager &renderer)
-{
-    auto view = reg.view<Cursor>();
-    for (auto entity: view) {
-        auto cursor = reg.get<Cursor>(entity);
-        float x = cursor.Pos.x * TileSize::Size;
-        float y = cursor.Pos.y * TileSize::Size;
-        auto dest = Engine::ivec4 {(int)x, int(y), TileSize::Size, TileSize::Size};
-        auto src = Engine::ivec4 {0, 0, 32, 32};
-        renderer.Render(cursor.texture, src, dest);
+    for (auto entity: entities) {
+        auto transform = view.get<Transform>(entity);
+        auto sprite = view.get<Sprite>(entity);
+
+        Engine::ivec4 dest = {
+          transform.Translate.x * TileSize::Size,
+          transform.Translate.y * TileSize::Size,
+          TileSize::Size, TileSize::Size};
+
+        Engine::ivec4 src = {sprite.Src.x, sprite.Src.y, sprite.Size.x, sprite.Size.y};
+        renderer.Render(sprite.Texture, src, dest);
     }
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Utils/Tile.h"
+#include "Tile.h"
 #include <array>
 
 namespace TileSize {
@@ -12,5 +12,5 @@ namespace TileSize {
 }
 
 struct TileArray {
-    std::array<std::array<Tile *, TileSize::X>, TileSize::Y> Tiles;
+    std::array<std::array<Entity, TileSize::X>, TileSize::Y> Tiles {};
 };

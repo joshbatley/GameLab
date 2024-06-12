@@ -9,32 +9,33 @@
 
 class Dispatcher {
 public:
-    std::map<std::type_index, std::vector<std::function<void(std::any)>>> eventListeners;
-    std::vector<std::pair<std::type_index, std::any>> eventQueue;
-
-    template<typename EventType>
-    void AddEventListener(std::function<void(EventType)> listener)
+    template<typename Event>
+    void AddEventReader(std::function<void(Event)> readers)
     {
-        eventListeners[typeid(EventType)].push_back([=](std::any eventData) {
-            listener(std::any_cast<EventType>(eventData));
+        _readers[typeid(Event)].push_back([readers](std::any eventData) {
+            readers(std::any_cast<Event>(eventData));
         });
     }
 
-    template<typename EventType>
-    void EnqueueEvent(EventType eventData)
+    template<typename Event>
+    void Send(Event eventData)
     {
-        eventQueue.push_back({typeid(EventType), std::any(eventData)});
+        _queue.emplace_back<std::pair<std::type_index, std::any>>({typeid(Event), std::any(eventData)});
     }
 
     void Update()
     {
-        for (const auto &eventData: eventQueue) {
-            if (eventListeners.find(eventData.first) != eventListeners.end()) {
-                for (auto &listener: eventListeners[eventData.first]) {
-                    listener(eventData.second);
+        for (const auto &[type, event]: _queue) {
+            if (_readers.find(type) != _readers.end()) {
+                for (auto &listener: _readers[type]) {
+                    listener(event);
                 }
             }
         }
-        eventQueue = {};
+        _queue.clear();
     }
+
+private:
+    std::map<std::type_index, std::vector<std::function<void(std::any)>>> _readers;
+    std::vector<std::pair<std::type_index, std::any>> _queue;
 };

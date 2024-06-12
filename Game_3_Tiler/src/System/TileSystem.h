@@ -4,19 +4,18 @@
 #include "../AssetManager.h"
 #include "../Components/Components.h"
 #include "../Engine/Engine.h"
+#include "../Events.h"
 #include "../System/InputSystem.h"
 #include "../Utils/Utils.h"
 #include <FastNoiseLite.h>
-#include <entt/entt.hpp>
 #include <random>
 
-class TileSystem final {
+class TileSystem {
 public:
-    static void Setup(entt::registry &reg, Asset::Manager asset);
-    static void ReloadWorld(entt::registry &reg, ReloadEvent reloadEvent);
-    static void UpdateTile(entt::registry &reg, UpdateTileEvent ev);
-    static void Render(entt::registry &reg, Renderer::Manager &render);
+    static void Plugin(App *app);
 
 private:
-    static void _generateNoise(TileArray &tileArray);
+    static void Setup(World &world, Asset::Manager asset);
+    static void ReloadWorld(World &world, ReloadEvent ev);
+    static void UpdateTile(World &world, UpdateTileEvent ev);
 };

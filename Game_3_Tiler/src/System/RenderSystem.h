@@ -1,12 +1,12 @@
 #pragma once
 
+#include "../App.h"
 #include "../AssetManager.h"
 #include "../Components/Components.h"
 #include "../Engine/Engine.h"
-#include "entt/entt.hpp"
+#include <algorithm>
 
 class RenderSystem {
 public:
-    static void Setup(entt::registry &reg, Asset::Manager manager);
-    static void Render(entt::registry &reg, Renderer::Manager &renderer);
+    static void Render(World &world, Renderer::Manager &renderer);
 };

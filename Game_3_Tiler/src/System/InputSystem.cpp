@@ -1,39 +1,50 @@
 #include "InputSystem.h"
 
-void CursorUpdate(entt::registry &reg, Input::Manager input)
+void InputSystem::Plugin(App *app)
+{
+    app->AddSystem(SETUP, InputSystem::SetupCursor)
+      .AddSystem(UPDATE, InputSystem::GenerateNewMap)
+      .AddSystem(UPDATE, InputSystem::CursorUpdate)
+      .AddSystem(UPDATE, InputSystem::UpdateTile);
+}
+
+void InputSystem::SetupCursor(World &world, Asset::Manager asset)
+{
+    auto ent = world.create();
+    world.emplace<Cursor>(ent);
+    auto texture = asset.LoadTexture(CURSOR_TEXTURE_KEY, (std::string(SPROUT_LANDS) + "/ui/icons/select.png").c_str());
+    world.emplace<Sprite>(ent, texture, Engine::ivec2 {0, 0}, Engine::ivec2 {32, 32});
+    world.emplace<Transform>(ent, Engine::ivec3 {0, 0, 10});
+}
+
+void InputSystem::CursorUpdate(World &world, Input::Manager input)
 {
     auto [mouseX, mouseY] = input.GetMousePosition();
-    auto entities = reg.view<Cursor>();
-    for (auto ent: entities) {
-        auto &cursor = reg.get<Cursor>(ent);
-        auto x = lerp(cursor.Pos.x, mouseX / TileSize::Size, cursor.Speed);
-        auto y = lerp(cursor.Pos.y, mouseY / TileSize::Size, cursor.Speed);
-        cursor.Pos = {x, y};
+    auto view = world.view<Cursor, Transform>();
+    for (auto ent: view) {
+        auto &transform = view.get<Transform>(ent);
+        transform.Translate = {mouseX / TileSize::Size, mouseY / TileSize::Size, 10};
     }
 }
 
-void GenerateNewMap(entt::registry &reg, Dispatcher &dispatcher, Input::Manager input)
+void InputSystem::GenerateNewMap(World &world, Dispatcher &dispatcher, Input::Manager input)
 {
     Noise &noise = Noise::getInstance();
     if (input.IsActionPressed(Input::ACTION3)) {
         noise.SetRandomSeed();
-        dispatcher.EnqueueEvent<ReloadEvent>(ReloadEvent {});
+        dispatcher.Send<ReloadEvent>(ReloadEvent {});
     }
 }
 
-void UpdateTile(entt::registry &reg, Dispatcher &dispatcher, Input::Manager input)
+void InputSystem::UpdateTile(World &world, Dispatcher &dispatcher, Input::Manager input)
 {
-    Cursor &cursor = reg.get<Cursor>(reg.view<Cursor>().front());
-    if (input.IsActionDown(Input::ACTION1)) {
-        auto x = cursor.Pos.x;
-        auto y = cursor.Pos.y;
-        dispatcher.EnqueueEvent<UpdateTileEvent>(UpdateTileEvent {x, y});
+    auto view = world.view<Cursor, Transform>();
+    for (auto ent: view) {
+        if (input.IsActionDown(Input::ACTION1)) {
+            auto &transform = view.get<Transform>(ent);
+            auto x = transform.Translate.x;
+            auto y = transform.Translate.y;
+            dispatcher.Send<UpdateTileEvent>(UpdateTileEvent {x, y});
+        }
     }
-}
-
-void InputSystem::Plugin(App *app)
-{
-    app->AddSystem(UPDATE, GenerateNewMap)
-      .AddSystem(UPDATE, CursorUpdate)
-      .AddSystem(UPDATE, UpdateTile);
 }

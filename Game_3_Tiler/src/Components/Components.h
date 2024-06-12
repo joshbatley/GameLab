@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Camera.h"
 #include "Cursor.h"
-#include "Position.h"
-#include "RenderedComponent.h"
+#include "Tile.h"
 #include "TileArray.h"
+
+#include "Sprite.h"
+#include "Transform.h"

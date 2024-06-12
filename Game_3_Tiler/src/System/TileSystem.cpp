@@ -1,67 +1,69 @@
 #include "TileSystem.h"
-#include "../Utils/Noise.h"
 
-void TileSystem::Setup(entt::registry &reg, Asset::Manager asset)
+void TileSystem::Plugin(App *app)
+{
+    app->AddSystem(SETUP, TileSystem::Setup)
+      .AddEvent<ReloadEvent>(TileSystem::ReloadWorld)
+      .AddEvent<UpdateTileEvent>(TileSystem::UpdateTile);
+}
+
+void TileSystem::Setup(World &world, Asset::Manager asset)
 {
     Noise &noise = Noise::getInstance();
-    reg.emplace<TileArray>(reg.create());
-    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
+    world.emplace<TileArray>(world.create());
+    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
+
     for (int y = 0; y < TileSize::Y; y++) {
         for (int x = 0; x < TileSize::X; x++) {
-            auto &tile = reg.emplace<Tile>(reg.create());
-            tileArray.Tiles[y][x] = &tile;
-            tile.dest = {x, y};
-            tile.data = noise.GetNoise((float)x, (float)y);
-            tile.texture = asset.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
-            if (tile.data > 0.2f) {
-                tile.src = TileTypes.at(Land).src;
-            } else if (tile.data > 0.1f) {
-                tile.src = TileTypes.at(Sand).src;
+            auto ent = world.create();
+            auto &tile = world.emplace<Tile>(ent);
+            auto texture = asset.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
+
+            auto &sprite = world.emplace<Sprite>(ent, texture, Engine::ivec2 {0, 0}, Engine::ivec2 {16, 16});
+            auto &transform = world.emplace<Transform>(ent);
+
+            tileArray.Tiles[y][x] = ent;
+            transform.Translate = {x, y, 0};
+            auto data = noise.GetNoise((float)x, (float)y);
+
+            if (data > 0.2f) {
+                sprite.Src = TileTypes.at(Land);
+            } else if (data > 0.1f) {
+                sprite.Src = TileTypes.at(Sand);
             } else {
-                tile.src = TileTypes.at(Water).src;
+                sprite.Src = TileTypes.at(Water);
             }
         }
     }
-    //    _generateNoise(tileArray);
-}
-void TileSystem::ReloadWorld(entt::registry &reg, ReloadEvent reloadEvent)
-{
-    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
-    _generateNoise(tileArray);
 }
 
-void TileSystem::UpdateTile(entt::registry &reg, UpdateTileEvent ev)
+void TileSystem::ReloadWorld(World &world, ReloadEvent _)
 {
-    TileArray &tileArray = reg.get<TileArray>(reg.view<TileArray>().front());
-    auto tile = tileArray.Tiles[ev.y][ev.x];
-    tile->src = TileTypes.at(Land).src;
-}
-
-void TileSystem::Render(entt::registry &reg, Renderer::Manager &render)
-{
-    auto view = reg.view<Tile>();
-    for (auto entity: view) {
-        auto tile = view.get<Tile>(entity);
-        Engine::ivec4 dest = {tile.dest.x * TileSize::Size, tile.dest.y * TileSize::Size, TileSize::Size, TileSize::Size};
-        Engine::ivec4 src = {tile.src.x, tile.src.y, 16, 16};
-        render.Render(tile.texture, src, dest);
-    }
-}
-
-void TileSystem::_generateNoise(TileArray &tileArray)
-{
+    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
     Noise &noise = Noise::getInstance();
+
     for (int y = 0; y < TileSize::Y; y++) {
         for (int x = 0; x < TileSize::X; x++) {
-            auto tile = tileArray.Tiles[y][x];
-            tile->data = noise.GetNoise((float)x, (float)y);
-            if (tile->data > 0.2f) {
-                tile->src = TileTypes.at(Land).src;
-            } else if (tile->data > 0.1f) {
-                tile->src = TileTypes.at(Sand).src;
+            auto ent = tileArray.Tiles[y][x];
+            auto &sprite = world.get<Sprite>(ent);
+            auto &tile = world.get<Tile>(ent);
+            auto data = noise.GetNoise((float)x, (float)y);
+
+            if (data > 0.2f) {
+                sprite.Src = TileTypes.at(Land);
+            } else if (data > 0.1f) {
+                sprite.Src = TileTypes.at(Sand);
             } else {
-                tile->src = TileTypes.at(Water).src;
+                sprite.Src = TileTypes.at(Water);
             }
         }
     }
+}
+
+void TileSystem::UpdateTile(World &world, UpdateTileEvent ev)
+{
+    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
+    auto ent = tileArray.Tiles[ev.y][ev.x];
+    auto &sprite = world.get<Sprite>(ent);
+    sprite.Src = TileTypes.at(Water);
 }

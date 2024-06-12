@@ -12,15 +12,6 @@ App &App::AddPlugin(void (*func)(App *))
     return *this;
 }
 
-//template<typename Func>
-//App &App::AddEvent(Func func)
-//{
-//    _dispatcher.sink<ReloadEvent>().template connect<ReloadEvent>([func, this](const ReloadEvent &ev) {
-//        func(_registry, ev);
-//    });
-//    return *this;
-//}
-
 App &App::AddSystem(Schedule schedule, void (*func)())
 {
     _systems[schedule].emplace_back([=] {
@@ -29,7 +20,7 @@ App &App::AddSystem(Schedule schedule, void (*func)())
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &))
+App &App::AddSystem(Schedule schedule, void (*func)(World &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry);
@@ -37,7 +28,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &))
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Dispatcher &))
+App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _dispatcher);
@@ -45,7 +36,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Dispatcher
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Asset::Manager))
+App &App::AddSystem(Schedule schedule, void (*func)(World &, Asset::Manager))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _assetManager);
@@ -53,7 +44,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Asset::Man
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Input::Manager))
+App &App::AddSystem(Schedule schedule, void (*func)(World &, Input::Manager))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _inputManager);
@@ -61,7 +52,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Input::Man
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Dispatcher &, Input::Manager))
+App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &, Input::Manager))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _dispatcher, _inputManager);
@@ -69,7 +60,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Dispatcher
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(entt::registry &, Renderer::Manager &renderer))
+App &App::AddSystem(Schedule schedule, void (*func)(World &, Renderer::Manager &renderer))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _renderer);
