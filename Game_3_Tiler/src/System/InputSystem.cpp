@@ -27,12 +27,13 @@ void InputSystem::CursorUpdate(Engine::World &world, Input::Manager &input)
     }
 }
 
-void InputSystem::GenerateNewMap(Engine::World &world, Dispatcher &dispatcher, Input::Manager &input)
+void InputSystem::GenerateNewMap(Engine::World &_, Dispatcher &dispatcher, Input::Manager &input)
 {
     Noise &noise = Noise::getInstance();
     if (input.IsActionPressed(Input::ACTION3)) {
         noise.SetRandomSeed();
-        dispatcher.Send<ReloadEvent>(ReloadEvent {});
+        dispatcher.Send(ApplyRulesEvent {});
+        dispatcher.Send(RefreshWorldEvent {});
     }
 }
 
@@ -44,7 +45,7 @@ void InputSystem::UpdateTile(Engine::World &world, Dispatcher &dispatcher, Input
             auto &transform = view.get<Transform>(ent);
             auto x = transform.translate.x;
             auto y = transform.translate.y;
-            dispatcher.Send<UpdateTileEvent>(UpdateTileEvent {x, y});
+            dispatcher.Send(UpdateTileEvent {x, y});
         }
     }
 }

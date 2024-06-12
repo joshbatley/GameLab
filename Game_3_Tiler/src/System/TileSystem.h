@@ -15,6 +15,7 @@ public:
 
 private:
     static void Setup(Engine::World &world, Asset::Manager &asset);
-    static void ReloadWorld(Engine::World &world, ReloadEvent ev);
-    static void UpdateTile(Engine::World &world, UpdateTileEvent ev);
+    static void ReloadWorld(Engine::World &world, Dispatcher &dispatcher, RefreshWorldEvent ev);
+    static void UpdateTile(Engine::World &world, Dispatcher &dispatcher, UpdateTileEvent ev);
+    static void ApplyRules(Engine::World &world, ApplyRulesEvent ev);
 };

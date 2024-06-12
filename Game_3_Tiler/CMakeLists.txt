@@ -35,6 +35,7 @@ add_executable(Game_3_Tiler src/main.cpp
         ${SYSTEMS}
         ${UTILS}
         src/Events.h
+        src/Utils/TileUtils.h
 )
 
 

@@ -26,11 +26,21 @@ public:
     App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Input::Manager &Input));
     App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Dispatcher &dispatcher, Input::Manager &Input));
     App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Graphics::Manager &render));
+
     template<typename EventType>
     App &AddEvent(void (*func)(Engine::World &world, EventType))
     {
         _dispatcher.AddEventReader<EventType>([func, this](EventType ev) {
             func(_registry, ev);
+        });
+        return *this;
+    }
+
+    template<typename EventType>
+    App &AddEvent(void (*func)(Engine::World &world, Dispatcher &dispatcher, EventType))
+    {
+        _dispatcher.AddEventReader<EventType>([func, this](EventType ev) {
+            func(_registry, _dispatcher, ev);
         });
         return *this;
     }

@@ -1,7 +1,11 @@
 #pragma once
 
-struct ReloadEvent {
+struct RefreshWorldEvent {
     int id;
+};
+
+struct ApplyRulesEvent {
+    int id2 = 1;
 };
 
 struct UpdateTileEvent {
