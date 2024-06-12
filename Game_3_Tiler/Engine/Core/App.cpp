@@ -2,7 +2,7 @@
 
 App::App(const char *title, const int x, const int y, const int w, const int h, const Uint32 flags)
     : _window(Window::Manager(title, x, y, w, h, flags)),
-      _renderer(Renderer::Manager(_window.GetRenderer())),
+      _renderer(Graphics::Manager(_window.GetRenderer())),
       _assetManager(Asset::Manager(_window.GetRenderer()))
 {}
 
@@ -60,7 +60,7 @@ App &App::AddSystem(Schedule schedule, void (*func)(World &, Dispatcher &, Input
     return *this;
 }
 
-App &App::AddSystem(Schedule schedule, void (*func)(World &, Renderer::Manager &renderer))
+App &App::AddSystem(Schedule schedule, void (*func)(World &, Graphics::Manager &renderer))
 {
     _systems[schedule].emplace_back([=] {
         func(_registry, _renderer);

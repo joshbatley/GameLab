@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include "Includes.h"
 #include <functional>
 #include <iostream>
 #include <unordered_map>

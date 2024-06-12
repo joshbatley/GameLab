@@ -1,7 +1,7 @@
 #include "AssetManager.h"
 
 namespace Asset {
-    Manager::Manager(SDL_Renderer *renderer)
+    Manager::Manager(Graphics::Renderer *renderer)
         : _renderer(renderer)
     {
         TTF_Init();
@@ -14,7 +14,7 @@ namespace Asset {
         }
     }
 
-    Font Manager::LoadFont(std::string key, const char *path, int size)
+    Graphics::Font Manager::LoadFont(std::string key, const char *path, int size)
     {
         TTF_Font *font = TTF_OpenFont(path, size);
         if (font == nullptr) {
@@ -24,7 +24,7 @@ namespace Asset {
         return font;
     }
 
-    Texture Manager::LoadTexture(std::string key, const char *path)
+    Graphics::Texture Manager::LoadTexture(std::string key, const char *path)
     {
         SDL_Surface *tmp = IMG_Load(path);
         if (tmp == nullptr) {
@@ -32,7 +32,7 @@ namespace Asset {
         }
         SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, tmp);
         SDL_FreeSurface(tmp);
-        //        _textureMap.insert({key, texture});
+        _textureMap.insert({key, texture});
         return texture;
     }
 }

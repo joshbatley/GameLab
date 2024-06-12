@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Engine {
+namespace Vec {
     struct vec2 {
         float x, y;
 

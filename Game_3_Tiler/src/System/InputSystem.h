@@ -1,10 +1,9 @@
 #pragma once
 
-#include "../App.h"
 #include "../Components/Components.h"
-#include "../Engine/Engine.h"
 #include "../Events.h"
 #include "../Utils/Utils.h"
+#include <Engine.h>
 
 class InputSystem {
 public:

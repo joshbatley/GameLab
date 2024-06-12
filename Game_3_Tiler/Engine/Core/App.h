@@ -2,8 +2,9 @@
 
 #include "AssetManager.h"
 #include "Dispatcher.h"
-#include "Engine/Engine.h"
-#include <entt/entt.hpp>
+#include "Includes.h"
+#include "InputManager.h"
+#include "WindowManager.h"
 #include <functional>
 #include <iostream>
 #include <tuple>
@@ -32,7 +33,7 @@ public:
     App &AddSystem(Schedule schedule, void (*func)(World &world, Asset::Manager assetServer));
     App &AddSystem(Schedule schedule, void (*func)(World &world, Input::Manager Input));
     App &AddSystem(Schedule schedule, void (*func)(World &world, Dispatcher &dispatcher, Input::Manager Input));
-    App &AddSystem(Schedule schedule, void (*func)(World &world, Renderer::Manager &render));
+    App &AddSystem(Schedule schedule, void (*func)(World &world, Graphics::Manager &render));
     template<typename EventType>
     App &AddEvent(void (*func)(World &world, EventType))
     {
@@ -47,7 +48,7 @@ public:
 private:
     Window::Manager _window;
     Asset::Manager _assetManager;
-    Renderer::Manager _renderer;
+    Graphics::Manager _renderer;
     Input::Manager _inputManager;
     Dispatcher _dispatcher;
 

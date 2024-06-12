@@ -13,8 +13,8 @@ void InputSystem::SetupCursor(World &world, Asset::Manager asset)
     auto ent = world.create();
     world.emplace<Cursor>(ent);
     auto texture = asset.LoadTexture(CURSOR_TEXTURE_KEY, (std::string(SPROUT_LANDS) + "/ui/icons/select.png").c_str());
-    world.emplace<Sprite>(ent, texture, Engine::ivec2 {0, 0}, Engine::ivec2 {32, 32});
-    world.emplace<Transform>(ent, Engine::ivec3 {0, 0, 10});
+    world.emplace<Sprite>(ent, texture, Vec::ivec2 {0, 0}, Vec::ivec2 {32, 32});
+    world.emplace<Transform>(ent, Vec::ivec3 {0, 0, 10});
 }
 
 void InputSystem::CursorUpdate(World &world, Input::Manager input)

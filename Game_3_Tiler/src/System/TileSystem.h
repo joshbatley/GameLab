@@ -1,12 +1,10 @@
 #pragma once
 
-#include "../App.h"
-#include "../AssetManager.h"
 #include "../Components/Components.h"
-#include "../Engine/Engine.h"
 #include "../Events.h"
 #include "../System/InputSystem.h"
 #include "../Utils/Utils.h"
+#include <Engine.h>
 #include <FastNoiseLite.h>
 #include <random>
 

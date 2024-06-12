@@ -1,10 +1,10 @@
-#include "Renderer.h"
+#include "Graphics.h"
 
-namespace Renderer {
+namespace Graphics {
     Manager::Manager(SDL_Renderer *renderer)
         : _renderer(renderer) {}
 
-    void Manager::RenderText(const char *text, Font font, Engine::ivec4 color, Engine::ivec4 &dest)
+    void Manager::RenderText(const char *text, Font font, Vec::ivec4 color, Vec::ivec4 &dest)
     {
         SDL_Color c = {(Uint8)color.x, (Uint8)color.y, (Uint8)color.z, (Uint8)color.w};
         SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, c);
@@ -16,14 +16,14 @@ namespace Renderer {
         SDL_RenderCopy(_renderer, message, nullptr, &d);
     }
 
-    void Manager::RenderColor(Engine::ivec4 color, const Engine::ivec4 dest)
+    void Manager::RenderColor(Vec::ivec4 color, const Vec::ivec4 dest)
     {
         SDL_SetRenderDrawColor(_renderer, color.x, color.y, color.z, color.w);
         SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};
         SDL_RenderFillRect(_renderer, &d);
     }
 
-    void Manager::Render(Texture texture, Engine::ivec4 src, const Engine::ivec4 dest)
+    void Manager::Render(Texture texture, Vec::ivec4 src, const Vec::ivec4 dest)
     {
         SDL_Rect s = {src.x, src.y, src.z, src.w};
         SDL_Rect d = {dest.x, dest.y, dest.z, dest.w};

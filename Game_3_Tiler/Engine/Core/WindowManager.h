@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SDL.h>
+#include "Includes.h"
 #include <iostream>
 
 namespace Window {
@@ -10,7 +10,7 @@ namespace Window {
     public:
         Manager(const char *title, int x, int y, int w, int h, Uint32 flags);
         ~Manager();
-        
+
         void Clear() const;
         void Present() const;
         void FrameStart();

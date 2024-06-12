@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../Engine/Engine.h"
-#include "../Engine/Vectors.h"
+#include "Engine.h"
 #include <string>
 #include <unordered_map>
 
@@ -18,7 +17,7 @@ struct Tile {
     float data;
 };
 
-const std::unordered_map<Type, Engine::ivec2> TileTypes {
+const std::unordered_map<Type, Vec::ivec2> TileTypes {
   {Type::Water, {12 * 16, 11 * 16}},
   {Type::Land, {0 * 16, 1 * 16}},
   {Type::Sand, {1 * 16, 11 * 16}}};

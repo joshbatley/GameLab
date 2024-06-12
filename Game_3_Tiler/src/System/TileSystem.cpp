@@ -19,7 +19,7 @@ void TileSystem::Setup(World &world, Asset::Manager asset)
             auto &tile = world.emplace<Tile>(ent);
             auto texture = asset.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
 
-            auto &sprite = world.emplace<Sprite>(ent, texture, Engine::ivec2 {0, 0}, Engine::ivec2 {16, 16});
+            auto &sprite = world.emplace<Sprite>(ent, texture, Vec::ivec2 {0, 0}, Vec::ivec2 {16, 16});
             auto &transform = world.emplace<Transform>(ent);
 
             tileArray.Tiles[y][x] = ent;

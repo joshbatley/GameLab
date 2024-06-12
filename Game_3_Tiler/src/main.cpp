@@ -1,11 +1,8 @@
-#include "App.h"
-
-#include "Engine/Engine.h"
 #include "Events.h"
 #include "System/InputSystem.h"
 #include "System/RenderSystem.h"
 #include "System/TileSystem.h"
-
+#include <Engine.h>
 
 int main()
 {

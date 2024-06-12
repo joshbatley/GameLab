@@ -16,7 +16,7 @@ namespace Window {
 
         _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
         if (_renderer == nullptr) {
-            std::cout << "Renderer failed to init. Error: " << SDL_GetError() << std::endl;
+            std::cout << "Graphics failed to init. Error: " << SDL_GetError() << std::endl;
             return;
         }
 
