@@ -1,73 +1,19 @@
 #include "App.h"
 
-App::App(const char *title, const int x, const int y, const int w, const int h, const Uint32 flags)
-    : _window(Window::Manager(title, x, y, w, h, flags)),
+App::App(const char *title, const int x, const int y, const int w, const int h, const Uint32 flags, bool showCursor, bool relativeMouse)
+    : _window(Window::Manager(title, x, y, w, h, flags, showCursor, relativeMouse)),
       _renderer(Graphics::Manager(_window.GetRenderer())),
       _assetManager(Asset::Manager(_window.GetRenderer()))
 {
     this->AddSystem(System::RENDER, Render::System);
 }
 
-App &App::AddPlugin(void (*func)(App *))
+App::App(Window::Config config)
+    : _window(config),
+      _renderer(Graphics::Manager(_window.GetRenderer())),
+      _assetManager(Asset::Manager(_window.GetRenderer()))
 {
-    func(this);
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)())
-{
-    _systems[schedule].emplace_back([=] {
-        func();
-    });
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &))
-{
-    _systems[schedule].emplace_back([=] {
-        func(_registry);
-    });
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dispatcher &))
-{
-    _systems[schedule].emplace_back([=] {
-        func(_registry, _dispatcher);
-    });
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Asset::Manager &))
-{
-    _systems[schedule].emplace_back([=] {
-        func(_registry, _assetManager);
-    });
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Input::Manager &))
-{
-    _systems[schedule].emplace_back([=] {
-        func(_registry, _inputManager);
-    });
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Dispatcher &, Input::Manager &))
-{
-    _systems[schedule].emplace_back([=] {
-        func(_registry, _dispatcher, _inputManager);
-    });
-    return *this;
-}
-
-App &App::AddSystem(System::Schedule schedule, void (*func)(Engine::World &, Graphics::Manager &renderer))
-{
-    _systems[schedule].emplace_back([=] {
-        func(_registry, _renderer);
-    });
-    return *this;
+    this->AddSystem(System::RENDER, Render::System);
 }
 
 void App::Run()

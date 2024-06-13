@@ -14,6 +14,9 @@ namespace Input {
         ACTION1,
         ACTION2,
         ACTION3,
+        NUM1,
+        NUM2,
+        NUM3,
         // META
         COUNT,
     };

@@ -15,7 +15,10 @@ namespace Input {
           {SDL_SCANCODE_D, InputAction::RIGHT},
           {SDL_SCANCODE_Q, InputAction::ACTION1},
           {SDL_SCANCODE_E, InputAction::ACTION2},
-          {SDL_SCANCODE_SPACE, InputAction::ACTION3}};
+          {SDL_SCANCODE_SPACE, InputAction::ACTION3},
+          {SDL_SCANCODE_1, InputAction::NUM1},
+          {SDL_SCANCODE_2, InputAction::NUM2},
+          {SDL_SCANCODE_3, InputAction::NUM3}};
     }
 
     void Manager::Update()

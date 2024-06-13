@@ -13,8 +13,8 @@ void Render::System(Engine::World &world, Graphics::Manager &renderer)
         auto sprite = view.get<Sprite>(entity);
 
         Vec::ivec4 dest = {
-          transform.translate.x * transform.scale.x,
-          transform.translate.y * transform.scale.y,
+          transform.translate.x,
+          transform.translate.y,
           transform.scale.x, transform.scale.y};
 
         Vec::ivec4 src = {sprite.src.x, sprite.src.y, sprite.size.x, sprite.size.y};

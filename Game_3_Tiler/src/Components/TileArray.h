@@ -7,7 +7,7 @@
 namespace TileSize {
     const int multiplier = 2;
 
-    const int Size = 16 * multiplier;
+    const int Size = 32 * multiplier;
     const int X = 80 / multiplier;
     const int Y = 48 / multiplier;
 }

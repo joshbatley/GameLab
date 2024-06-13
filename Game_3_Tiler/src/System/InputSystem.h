@@ -15,5 +15,6 @@ private:
     static void SetupCursor(Engine::World &world, Asset::Manager &asset);
     static void CursorUpdate(Engine::World &world, Input::Manager &input);
     static void GenerateNewMap(Engine::World &world, Dispatcher &dispatcher, Input::Manager &input);
-    static void UpdateTile(Engine::World &world, Dispatcher &dispatcher, Input::Manager &input);
+    static void ChangeTileSelected(Engine::World &_, Input::Manager &input, Engine::Resource<GameData> resource);
+    static void UpdateTile(Engine::World &world, Dispatcher &dispatcher, Input::Manager &input, Engine::Resource<GameData> resource);
 };

@@ -3,6 +3,7 @@
 Noise::Noise()
 {
     _noise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+    _noise.SetFrequency(0.006f);
     _noise.SetSeed(Noise::_getRandomInt());
 }
 

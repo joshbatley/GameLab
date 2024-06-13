@@ -3,5 +3,5 @@
 #include "../Utils/Utils.h"
 
 struct Tile {
-    Type type = Type::DEFAULT;
+    TileType type = TileType::DEFAULT;
 };

@@ -10,4 +10,13 @@ namespace Engine {
 
     using Texture = SDL_Texture *;
     using Font = TTF_Font *;
+
+    template<typename ResourceType>
+    struct Resource {
+        ResourceType &data;
+        ResourceType &into()
+        {
+            return data;
+        }
+    };
 }

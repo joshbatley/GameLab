@@ -14,8 +14,9 @@ public:
     static void Plugin(App *app);
 
 private:
-    static void Setup(Engine::World &world, Asset::Manager &asset);
+    static void Setup(Engine::World &world, Dispatcher &dispatcher, Asset::Manager &asset);
     static void ReloadWorld(Engine::World &world, Dispatcher &dispatcher, RefreshWorldEvent ev);
     static void UpdateTile(Engine::World &world, Dispatcher &dispatcher, UpdateTileEvent ev);
     static void ApplyRules(Engine::World &world, ApplyRulesEvent ev);
+    static void ShowSelectedTile(Engine::World &world, Engine::Resource<GameData> resource);
 };

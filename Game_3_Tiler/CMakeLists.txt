@@ -8,7 +8,8 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB_RECURSE ENGINE_SOURCES "src/Engine/*.cpp" "src/Engine/**/*.cpp")
 file(GLOB_RECURSE ENGINE_HEADERS "src/Engine/*.h" "src/Engine/**/*.h")
 add_library(Engine ${ENGINE_SOURCES} ${ENGINE_HEADERS}
-        src/Engine/Alias.h)
+        src/Engine/Alias.h
+        src/Components/SelectedTile.h)
 
 target_link_libraries(Engine PRIVATE
         SDL2::SDL2main

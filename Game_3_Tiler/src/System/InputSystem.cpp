@@ -5,7 +5,8 @@ void InputSystem::Plugin(App *app)
     app->AddSystem(System::SETUP, InputSystem::SetupCursor)
       .AddSystem(System::UPDATE, InputSystem::GenerateNewMap)
       .AddSystem(System::UPDATE, InputSystem::CursorUpdate)
-      .AddSystem(System::UPDATE, InputSystem::UpdateTile);
+      .AddSystem(System::UPDATE, InputSystem::UpdateTile)
+      .AddSystem(System::UPDATE, InputSystem::ChangeTileSelected);
 }
 
 void InputSystem::SetupCursor(Engine::World &world, Asset::Manager &asset)
@@ -23,7 +24,9 @@ void InputSystem::CursorUpdate(Engine::World &world, Input::Manager &input)
     auto view = world.view<Cursor, Transform>();
     for (auto ent: view) {
         auto &transform = view.get<Transform>(ent);
-        transform.translate = {mouseX / TileSize::Size, mouseY / TileSize::Size, 10};
+        auto mousex = mouseX / 32;
+        auto mousey = mouseY / 32;
+        transform.translate = {mousex * TileSize::Size, mousey * TileSize::Size, 10};
     }
 }
 
@@ -37,15 +40,29 @@ void InputSystem::GenerateNewMap(Engine::World &_, Dispatcher &dispatcher, Input
     }
 }
 
-void InputSystem::UpdateTile(Engine::World &world, Dispatcher &dispatcher, Input::Manager &input)
+void InputSystem::ChangeTileSelected(Engine::World &_, Input::Manager &input, Engine::Resource<GameData> resource)
 {
+    if (input.IsActionDown(Input::NUM1)) {
+        resource.data.type = TileType::Water;
+    }
+    if (input.IsActionDown(Input::NUM2)) {
+        resource.data.type = TileType::Sand;
+    }
+    if (input.IsActionDown(Input::NUM3)) {
+        resource.data.type = TileType::Land;
+    }
+}
+
+void InputSystem::UpdateTile(Engine::World &world, Dispatcher &dispatcher, Input::Manager &input, Engine::Resource<GameData> resource)
+{
+    auto gameDate = resource.into();
     auto view = world.view<Cursor, Transform>();
     for (auto ent: view) {
         if (input.IsActionDown(Input::ACTION1)) {
             auto &transform = view.get<Transform>(ent);
-            auto x = transform.translate.x;
-            auto y = transform.translate.y;
-            dispatcher.Send(UpdateTileEvent {x, y});
+            auto x = transform.translate.x / TileSize::Size;
+            auto y = transform.translate.y / TileSize::Size;
+            dispatcher.Send(UpdateTileEvent {x, y, gameDate.type});
         }
     }
 }
