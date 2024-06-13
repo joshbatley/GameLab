@@ -62,8 +62,8 @@ namespace Window {
 
     void Manager::LimitFrameRate() const
     {
-        const Uint32 frame_end = SDL_GetTicks();
-        const Uint32 frame_time = frame_end - _frameStart;
+        const auto frame_end = SDL_GetTicks();
+        const auto frame_time = frame_end - _frameStart;
         constexpr int frame_delay = 1000 / FRAME_RATE;
 
         if (frame_time < frame_delay) {

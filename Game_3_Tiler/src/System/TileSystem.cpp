@@ -9,7 +9,7 @@ void TileSystem::Plugin(App *app)
       .AddSystem(System::UPDATE, ShowSelectedTile);
 }
 
-void TileSystem::Setup(Engine::World &world, Dispatcher &dispatcher, Asset::Manager &asset)
+void TileSystem::Setup(Engine::World &world, EventRegistry &eventRegistry, Asset::Manager &asset)
 {
     auto texture = asset.LoadTexture(SPRITE_TEXTURE_KEY, (std::string(HANA_CARAKA) + "/world/tileset/world-summer-tileset.png").c_str());
     auto borderTexture = asset.LoadTexture(SPRITE_TEXTURE_KEY + "12", (std::string(SPROUT_LANDS) + "/ui/dialog/borders.png").c_str());
@@ -23,22 +23,20 @@ void TileSystem::Setup(Engine::World &world, Dispatcher &dispatcher, Asset::Mana
     world.emplace<Transform>(selectedTile, Vec::ivec3 {40, 40, 30}, Vec::ivec3 {112, 112, 0});
     world.emplace<SelectedTile>(selectedTile);
 
-    Noise &noise = Noise::getInstance();
+    auto &noise = Noise::getInstance();
     world.emplace<TileArray>(world.create());
-    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
 
+    auto &tileArray = world.get<TileArray>(world.view<TileArray>().front());
     for (int y = 0; y < TileSize::Y; y++) {
         for (int x = 0; x < TileSize::X; x++) {
             auto ent = world.create();
+            tileArray.tiles[y][x] = ent;
+
             auto &tile = world.emplace<Tile>(ent);
             auto &sprite = world.emplace<Sprite>(ent, texture, Vec::ivec2 {0, 0}, Vec::ivec2 {16, 16});
-            auto &transform = world.emplace<Transform>(ent);
-
-            tileArray.tiles[y][x] = ent;
-            transform.translate = {x * TileSize::Size, y * TileSize::Size, 0};
-            transform.scale = {TileSize::Size, TileSize::Size, 0};
             auto data = noise.GetNoise((float)x, (float)y);
 
+            world.emplace<Transform>(ent, Vec::ivec3 {x * TileSize::Size, y * TileSize::Size, 0}, Vec::ivec3 {TileSize::Size, TileSize::Size, 0});
             if (data > 0.2f) {
                 tile.type = Land;
                 sprite.src = TileTypes.at(Land);
@@ -52,13 +50,13 @@ void TileSystem::Setup(Engine::World &world, Dispatcher &dispatcher, Asset::Mana
         }
     }
 
-    dispatcher.Send(ApplyRulesEvent {});
+    eventRegistry.Send(ApplyRulesEvent {});
 }
 
-void TileSystem::ReloadWorld(Engine::World &world, Dispatcher &dispatcher, RefreshWorldEvent _)
+void TileSystem::ReloadWorld(Engine::World &world, EventRegistry &eventRegistry, RefreshWorldEvent _)
 {
-    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
-    Noise &noise = Noise::getInstance();
+    auto &tileArray = world.get<TileArray>(world.view<TileArray>().front());
+    auto &noise = Noise::getInstance();
 
     for (int y = 0; y < TileSize::Y; y++) {
         for (int x = 0; x < TileSize::X; x++) {
@@ -79,12 +77,12 @@ void TileSystem::ReloadWorld(Engine::World &world, Dispatcher &dispatcher, Refre
             }
         }
     }
-    dispatcher.Send(ApplyRulesEvent {});
+    eventRegistry.Send(ApplyRulesEvent {});
 }
 
-void TileSystem::UpdateTile(Engine::World &world, Dispatcher &dispatcher, UpdateTileEvent ev)
+void TileSystem::UpdateTile(Engine::World &world, EventRegistry &eventRegistry, UpdateTileEvent ev)
 {
-    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
+    auto &tileArray = world.get<TileArray>(world.view<TileArray>().front());
     auto ent = tileArray.tiles[ev.y][ev.x];
     auto &sprite = world.get<Sprite>(ent);
     auto &tile = world.get<Tile>(ent);
@@ -92,7 +90,7 @@ void TileSystem::UpdateTile(Engine::World &world, Dispatcher &dispatcher, Update
     sprite.src = TileTypes.at(ev.type);
     tile.type = ev.type;
 
-    dispatcher.Send(ApplyRulesEvent {});
+    eventRegistry.Send(ApplyRulesEvent {});
 }
 
 bool isValidIndex(int index, int maxIndex)
@@ -118,10 +116,9 @@ Vec::ivec2 newSrc(TileType current, TileType up, TileType down, TileType left, T
 
 void TileSystem::ApplyRules(Engine::World &world, ApplyRulesEvent ev)
 {
-    TileArray &tileArray = world.get<TileArray>(world.view<TileArray>().front());
+    auto &tileArray = world.get<TileArray>(world.view<TileArray>().front());
     for (int y = 0; y < TileSize::Y; y++) {
         for (int x = 0; x < TileSize::X; x++) {
-
             auto ent = tileArray.tiles[y][x];
             auto type = world.get<Tile>(ent).type;
             auto &sprite = world.get<Sprite>(ent);

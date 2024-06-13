@@ -7,10 +7,10 @@
 #include <typeindex>
 #include <vector>
 
-class Dispatcher {
+class EventRegistry {
 public:
     template<typename Event>
-    void AddEventReader(std::function<void(Event)> readers)
+    void AddReader(std::function<void(Event)> readers)
     {
         _readers[typeid(Event)].push_back([readers](std::any eventData) {
             readers(std::any_cast<Event>(eventData));

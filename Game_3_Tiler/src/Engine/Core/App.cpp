@@ -33,7 +33,7 @@ void App::Run()
             system();
         }
 
-        _dispatcher.Update();
+        _eventRegistry.Update();
 
         _renderer.SetDrawColor();
         _window.Clear();

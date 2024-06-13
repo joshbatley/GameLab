@@ -16,7 +16,7 @@ namespace Asset {
 
     Engine::Font Manager::LoadFont(const std::string &key, const char *path, int size)
     {
-        TTF_Font *font = TTF_OpenFont(path, size);
+        auto *font = TTF_OpenFont(path, size);
         if (font == nullptr) {
             std::cout << "Font not loaded from " << path << std::endl;
         }
@@ -26,11 +26,11 @@ namespace Asset {
 
     Engine::Texture Manager::LoadTexture(const std::string &key, const char *path)
     {
-        SDL_Surface *tmp = IMG_Load(path);
+        auto *tmp = IMG_Load(path);
         if (tmp == nullptr) {
             std::cout << "Texture not loaded from path" << path << std::endl;
         }
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(_renderer, tmp);
+        auto *texture = SDL_CreateTextureFromSurface(_renderer, tmp);
         SDL_FreeSurface(tmp);
         _textureMap.insert({key, texture});
         return texture;

@@ -5,10 +5,9 @@
 
 int main()
 {
-    auto d = GameData {};
     App app(Window::Config {"Game 3 - Tiler"});
     app
-      .AddResource(d)
+      .AddResource(GameData {})
       .AddPlugin(InputSystem::Plugin)
       .AddPlugin(TileSystem::Plugin)
       .Run();

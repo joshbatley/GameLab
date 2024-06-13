@@ -7,11 +7,11 @@ namespace Graphics {
     void Manager::RenderText(const char *text, Engine::Font font, Vec::ivec4 color, Vec::ivec4 &dest)
     {
         SDL_Color c = {(Uint8)color.x, (Uint8)color.y, (Uint8)color.z, (Uint8)color.w};
-        SDL_Surface *surface = TTF_RenderUTF8_Solid(font, text, c);
+        auto *surface = TTF_RenderUTF8_Solid(font, text, c);
         if (surface == nullptr) {
             std::cout << "Font not loaded for " << font << std::endl;
         }
-        SDL_Texture *message = SDL_CreateTextureFromSurface(_renderer, surface);
+        auto *message = SDL_CreateTextureFromSurface(_renderer, surface);
         SDL_Rect d = {dest.x, dest.y, surface->w, surface->h};
         SDL_RenderCopy(_renderer, message, nullptr, &d);
     }
