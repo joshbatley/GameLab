@@ -166,7 +166,7 @@ func (w *Writer) updateTemplateFiles(folder string) {
 		// Convert content to string
 		fileContent := string(content)
 
-		modifiedContent := strings.Replace(fileContent, NameReplace, w.getFullName(), -1)
+		modifiedContent := strings.Replace(fileContent, NameReplace, w.Name, -1)
 
 		// Write the modified content back to the file
 		err = os.WriteFile(filepath.Join(path, file.Name()), []byte(modifiedContent), 0644)
@@ -294,10 +294,10 @@ func gitAddSubmodule(folder string) {
 
 	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, "private")
 	cmd.Run()
-	initCmd := exec.Command("git", "submodule", "init")
-	updateCmd := exec.Command("git", "submodule", "update")
-	initCmd.Run()
-	updateCmd.Run()
+	//initCmd := exec.Command("git", "submodule", "init")
+	//updateCmd := exec.Command("git", "submodule", "update")
+	//initCmd.Run()
+	//updateCmd.Run()
 
 }
 
