@@ -287,12 +287,12 @@ func generateAssetFolder(folder string) string {
 	return filepath.Join(folder, "assets")
 }
 
-func gitAddSubmodule(folder string) {
+func (w *Writer) gitAddSubmodule(folder string) {
 	originalDir, _ := os.Getwd()
 	defer os.Chdir(originalDir)
-	os.Chdir(folder)
+	os.Chdir(getProjectRoot())
 
-	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, "private")
+	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, filepath.Join(w.getFullName()+"/asset/private"))
 	cmd.Run()
 	//initCmd := exec.Command("git", "submodule", "init")
 	//updateCmd := exec.Command("git", "submodule", "update")
