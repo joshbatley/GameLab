@@ -49,7 +49,7 @@ func (w *Writer) generateGameProject() {
 	generateEngineHeader(w.Libraries, engineSrc)
 	w.generateEngineFiles(engineSrc)
 	assetSrc := generateAssetFolder(folder)
-	gitAddSubmodule(assetSrc)
+	w.gitAddSubmodule(assetSrc)
 	w.gitCommit()
 }
 
@@ -71,7 +71,7 @@ func (w *Writer) generateToolProject() {
 	generateEngineHeader(w.Libraries, engineSrc)
 	w.generateEngineFiles(engineSrc)
 	assetSrc := generateAssetFolder(folder)
-	gitAddSubmodule(assetSrc)
+	w.gitAddSubmodule(assetSrc)
 	w.gitCommit()
 }
 
@@ -294,11 +294,6 @@ func (w *Writer) gitAddSubmodule(folder string) {
 
 	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, filepath.Join(w.getFullName()+"/asset/private"))
 	cmd.Run()
-	//initCmd := exec.Command("git", "submodule", "init")
-	//updateCmd := exec.Command("git", "submodule", "update")
-	//initCmd.Run()
-	//updateCmd.Run()
-
 }
 
 func (w *Writer) gitCommit() {
