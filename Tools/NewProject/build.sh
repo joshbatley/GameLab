@@ -1,3 +1,3 @@
 go build .
 
-mv NewProject ../InitalProject
+mv NewProject ../scripts/new-project
