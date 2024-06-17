@@ -302,6 +302,9 @@ func gitAddSubmodule(folder string) {
 }
 
 func (w *Writer) gitCommit() {
+	originalDir, _ := os.Getwd()
+	defer os.Chdir(originalDir)
+	os.Chdir(getProjectRoot())
 	cmd := exec.Command("git", "add ", ".")
 	cmd.Run()
 	cmd = exec.Command("git", "commit", "-m", "Added new Project: "+w.getFullName())
