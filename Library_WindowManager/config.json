@@ -1,0 +1,10 @@
+{
+  "name": "WindowManager",
+  "outLocation": "Core",
+  "files": [
+    "WindowManager.cpp",
+    "WindowManager.h",
+    "Renderer.cpp",
+    "Renderer.h"
+  ]
+}
