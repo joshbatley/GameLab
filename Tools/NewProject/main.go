@@ -19,7 +19,8 @@ const (
 type ProjectType int
 
 const (
-	Game ProjectType = iota
+	Default ProjectType = iota
+	Game
 	Library
 	Tool
 )
@@ -59,7 +60,7 @@ func main() {
 	takenNames := r.GetAllNames()
 	selectLibraries, projectName, projectType := getUserValues(options, takenNames)
 	libs := stringToLibrary(selectLibraries, r.Libraries)
-	if projectName == "" {
+	if projectName == "" || projectType == Default {
 		return
 	}
 	NewWriter(libs, projectName, projectType, r.GetLatestGameIncrement()).Run()
