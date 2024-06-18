@@ -1,5 +1,4 @@
 #pragma once
 
-class Components {
-
-};
+#include "Sprite.h"
+#include "Transform.h"
