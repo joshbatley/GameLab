@@ -40,7 +40,7 @@ func (w *Writer) generateGameProject() {
 	projectFolder := createFolder(getProjectRoot(), w.getFullName())
 	srcFolder := createFolder(projectFolder, "src")
 	engineFolder := createFolder(srcFolder, "Engine")
-	assetFolder := createFolder(projectFolder, "assets")
+	createFolder(projectFolder, "assets")
 
 	w.copyTemplateRootFiles(projectFolder)
 	w.copyTemplateTypeFiles(projectFolder)
@@ -49,7 +49,7 @@ func (w *Writer) generateGameProject() {
 	w.generateEngineHeader(engineFolder)
 	w.generateEngineFiles(engineFolder)
 
-	gitAddSubmodule(assetFolder)
+	gitAddSubmodule(filepath.Join(w.getFullName(), "assets"))
 	gitCommit(w.getFullName())
 }
 
@@ -67,7 +67,7 @@ func (w *Writer) generateToolProject() {
 	folder := createFolder(getProjectRoot(), w.getFullName())
 	srcFolder := createFolder(folder, "src")
 	engineFolder := createFolder(srcFolder, "Engine")
-	assetFolder := createFolder(folder, "assets")
+	createFolder(folder, "assets")
 
 	w.copyTemplateRootFiles(folder)
 	w.copyTemplateTypeFiles(folder)
@@ -76,7 +76,7 @@ func (w *Writer) generateToolProject() {
 	w.generateEngineHeader(engineFolder)
 	w.generateEngineFiles(engineFolder)
 
-	gitAddSubmodule(assetFolder)
+	gitAddSubmodule(filepath.Join(w.getFullName(), "assets"))
 	gitCommit(w.getFullName())
 }
 
