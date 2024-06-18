@@ -1,0 +1,8 @@
+{
+  "name": "Systems",
+  "outLocation": "Core",
+  "files": [
+    "Systems.cpp",
+    "Systems.h"
+  ]
+}

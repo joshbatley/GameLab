@@ -1,12 +1,6 @@
 #pragma once
 
-#include "../Alias.h"
 #include "../Engine.h"
-#include "../Systems/Systems.h"
-#include "AssetManager.h"
-#include "EventRegistry.h"
-#include "InputManager.h"
-#include "WindowManager.h"
 #include <functional>
 #include <iostream>
 #include <tuple>
