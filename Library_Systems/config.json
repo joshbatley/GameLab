@@ -1,8 +1,9 @@
 {
   "name": "Systems",
-  "outLocation": "Core",
+  "outLocation": "Systems",
   "files": [
-    "Systems.cpp",
+    "Render.cpp",
+    "Render.h",
     "Systems.h"
   ]
 }

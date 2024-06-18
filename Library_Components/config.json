@@ -1,0 +1,8 @@
+{
+  "name": "Components",
+  "outLocation": "Core",
+  "files": [
+    "Components.cpp",
+    "Components.h"
+  ]
+}

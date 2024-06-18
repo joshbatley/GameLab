@@ -1,5 +1,11 @@
 #pragma once
 
-class Systems {
+#include "Render.h"
 
-};
+namespace System {
+    enum Schedule {
+        SETUP,
+        UPDATE,
+        RENDER
+    };
+}
