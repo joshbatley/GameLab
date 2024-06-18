@@ -39,7 +39,7 @@ func (w *Writer) Run() {
 func (w *Writer) generateGameProject() {
 	projectFolder := createFolder(getProjectRoot(), w.getFullName())
 	srcFolder := createFolder(projectFolder, "src")
-	engineFolder := createFolder(projectFolder, "Engine")
+	engineFolder := createFolder(srcFolder, "Engine")
 	assetFolder := createFolder(projectFolder, "assets")
 
 	w.copyTemplateRootFiles(projectFolder)
@@ -66,7 +66,7 @@ func (w *Writer) generateLibraryProject() {
 func (w *Writer) generateToolProject() {
 	folder := createFolder(getProjectRoot(), w.getFullName())
 	srcFolder := createFolder(folder, "src")
-	engineFolder := createFolder(folder, "Engine")
+	engineFolder := createFolder(srcFolder, "Engine")
 	assetFolder := createFolder(folder, "assets")
 
 	w.copyTemplateRootFiles(folder)
