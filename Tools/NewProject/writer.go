@@ -131,7 +131,7 @@ func (w *Writer) updateTemplateFiles(folder string) {
 		}
 		content := readFile(filepath.Join(path, file.Name()))
 		modifiedContent := strings.Replace(content, NameReplace, w.Name, -1)
-		modifiedContent = strings.Replace(content, NameReplaceLower, strings.ToLower(w.Name), -1)
+		modifiedContent = strings.Replace(modifiedContent, NameReplaceLower, strings.ToLower(w.Name), -1)
 		createFile(path, file.Name(), modifiedContent)
 	}
 }
