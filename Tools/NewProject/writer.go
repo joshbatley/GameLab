@@ -39,7 +39,7 @@ func (w *Writer) Run() {
 func (w *Writer) generateGameProject() {
 	projectFolder := createFolder(getProjectRoot(), w.getFullName())
 	srcFolder := createFolder(projectFolder, "src")
-	engineFolder := createFolder(srcFolder, "Engine")
+	engineFolder := createFolder(projectFolder, "Engine")
 	createFolder(projectFolder, "assets")
 
 	w.copyTemplateRootFiles(projectFolder)
@@ -173,7 +173,7 @@ namespace Engine {
 }
 
 func (w *Writer) generateGameMainFile(folder string) {
-	content := `#include "Engine/Engine.h"
+	content := `#include "Engine.h"
 
 int main()
 {
@@ -185,7 +185,7 @@ int main()
 }
 
 func (w *Writer) generateToolMainFile(folder string) {
-	content := `#include "Engine/Engine.h"
+	content := `#include "Engine.h"
 
 int main()
 {

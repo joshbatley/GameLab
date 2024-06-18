@@ -3,7 +3,8 @@ project(#NAME#)
 
 set(CMAKE_CXX_STANDARD 17)
 
-file(GLOB ENGINE_FILES "src/Engine/*.cpp" "src/Engine/**/*.cpp" "src/Engine/*.h" "src/Engine/**/*.h")
+include_directories(Engine)
+file(GLOB ENGINE_FILES Engine/**/*.cpp)
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
