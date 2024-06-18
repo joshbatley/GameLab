@@ -1,0 +1,8 @@
+{
+  "name": "EventRegistry",
+  "outLocation": "Core",
+  "files": [
+    "EventRegistry.cpp",
+    "EventRegistry.h"
+  ]
+}
