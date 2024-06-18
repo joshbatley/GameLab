@@ -19,6 +19,7 @@ add_executable(#NAME#
 
 target_link_libraries(#NAME# PRIVATE
         SDL2::SDL2main
+        SDL2::SDL2-static
         SDL2_image::SDL2_image-static
         SDL2_ttf::SDL2_ttf-static
         EnTT::EnTT
