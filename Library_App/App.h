@@ -34,7 +34,7 @@ public:
         return *this;
     }
     template<typename EventType>
-    App &AddEvent(void (*func)(Engine::World &world, EventRegistry &eventRegistry, EventType))
+    App &AddEvent(void (*func)(Engine::World &world, Event::Registry &eventRegistry, EventType))
     {
         _eventRegistry.AddReader<EventType>([func, this](EventType ev) {
             func(_registry, _eventRegistry, ev);
@@ -55,14 +55,14 @@ public:
         });
         return *this;
     }
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, EventRegistry &eventRegistry))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Event::Registry &eventRegistry))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _eventRegistry);
         });
         return *this;
     }
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, asset::registry &assetRegistry))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Asset::Registry &assetRegistry))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _assetRegistry);
@@ -76,14 +76,14 @@ public:
         });
         return *this;
     }
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, EventRegistry &eventRegistry, Input::Manager &Input))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Event::Registry &eventRegistry, Input::Manager &Input))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _eventRegistry, _inputManager);
         });
         return *this;
     }
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, EventRegistry &eventRegistry, asset::registry &assetRegistry))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Event::Registry &eventRegistry, Asset::Registry &assetRegistry))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _eventRegistry, _assetRegistry);
@@ -106,7 +106,7 @@ public:
         return *this;
     }
     template<typename ResourceType>
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, EventRegistry &eventRegistry, Engine::Resource<ResourceType> resource))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Event::Registry &eventRegistry, Engine::Resource<ResourceType> resource))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _eventRegistry, std::any_cast<Engine::Resource<ResourceType>>(_resources[typeid(ResourceType)]));
@@ -114,7 +114,7 @@ public:
         return *this;
     }
     template<typename ResourceType>
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, asset::registry &assetRegistry, Engine::Resource<ResourceType> resource))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Asset::Registry &assetRegistry, Engine::Resource<ResourceType> resource))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _assetRegistry, std::any_cast<Engine::Resource<ResourceType>>(_resources[typeid(ResourceType)]));
@@ -130,7 +130,7 @@ public:
         return *this;
     }
     template<typename ResourceType>
-    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, EventRegistry &eventRegistry, Input::Manager &Input, Engine::Resource<ResourceType> resource))
+    App &AddSystem(System::Schedule schedule, void (*func)(Engine::World &world, Event::Registry &eventRegistry, Input::Manager &Input, Engine::Resource<ResourceType> resource))
     {
         _systems[schedule].emplace_back([=] {
             func(_registry, _eventRegistry, _inputManager, std::any_cast<Engine::Resource<ResourceType>>(_resources[typeid(ResourceType)]));

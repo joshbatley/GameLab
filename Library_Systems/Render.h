@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Core/Graphics.h"
 #include "../Engine.h"
 
 class Render {

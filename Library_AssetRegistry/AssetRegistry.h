@@ -2,6 +2,7 @@
 
 #include "../Alias.h"
 #include <SDL_image.h>
+#include <iostream>
 
 namespace Asset {
     class Registry {
