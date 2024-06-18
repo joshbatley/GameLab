@@ -1,6 +1,6 @@
 {
   "name": "WindowManager",
-  "outLocation": "Core",
+  "outPath": "Core",
   "files": [
     "WindowManager.cpp",
     "WindowManager.h",
