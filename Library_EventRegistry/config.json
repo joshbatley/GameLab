@@ -1,6 +1,6 @@
 {
   "name": "EventRegistry",
-  "outLocation": "Core",
+  "outPath": "Core",
   "files": [
     "EventRegistry.h"
   ]

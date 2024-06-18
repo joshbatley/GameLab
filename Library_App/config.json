@@ -1,6 +1,6 @@
 {
   "name": "App",
-  "outLocation": "Core",
+  "outPath": "Core",
   "files": [
     "App.cpp",
     "App.h"

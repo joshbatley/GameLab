@@ -1,6 +1,6 @@
 {
   "name": "Systems",
-  "outLocation": "Systems",
+  "outPath": "Systems",
   "files": [
     "Render.cpp",
     "Render.h",

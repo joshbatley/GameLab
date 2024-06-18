@@ -1,6 +1,6 @@
 {
   "name": "AssetRegistry",
-  "outLocation": "Core",
+  "outPath": "Core",
   "files": [
     "AssetRegistry.cpp",
     "AssetRegistry.h"

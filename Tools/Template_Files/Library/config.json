@@ -1,6 +1,6 @@
 {
   "name": "#NAME#",
-  "outLocation": "Core",
+  "outPath": "Core",
   "files": [
     "#NAME#.cpp",
     "#NAME#.h"

@@ -1,6 +1,6 @@
 {
   "name": "Vector",
-  "outLocation": "Core",
+  "outPath": "Core",
   "files": [
     "Vector.h"
   ]
