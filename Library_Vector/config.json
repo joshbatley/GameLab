@@ -1,0 +1,8 @@
+{
+  "name": "Vector",
+  "outLocation": "Core",
+  "files": [
+    "Vector.cpp",
+    "Vector.h"
+  ]
+}
