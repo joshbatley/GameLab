@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics.h"
+#include "../Alias.h"
 #include <SDL_image.h>
 
 namespace Asset {
