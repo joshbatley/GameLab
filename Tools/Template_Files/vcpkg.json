@@ -1,5 +1,5 @@
 {
-  "name": "#NAME#",
+  "name": "#NAME_L#",
   "version-string": "1.0.0",
   "builtin-baseline": "8f542fd07acb462c8e4f15e78d198a11a86be06e",
   "dependencies": [
