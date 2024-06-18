@@ -126,6 +126,9 @@ func (w *Writer) updateTemplateFiles(folder string) {
 	path := filepath.Join(folder)
 	fileInfos, _ := os.ReadDir(path)
 	for _, file := range fileInfos {
+		if file.IsDir() {
+			continue
+		}
 		content := readFile(filepath.Join(path, file.Name()))
 		modifiedContent := strings.Replace(content, NameReplace, w.Name, -1)
 		createFile(path, file.Name(), modifiedContent)

@@ -46,10 +46,10 @@ func createFolder(source, folder string) string {
 	return path
 }
 
-func copyFile(sourcePath, destinationPath string) error {
+func copyFile(sourcePath, destinationPath string) {
 	sourceFile, err := os.Open(sourcePath)
 	if err != nil {
-		return err
+		fmt.Println("Error opening file:", err)
 	}
 	defer sourceFile.Close()
 
@@ -57,22 +57,20 @@ func copyFile(sourcePath, destinationPath string) error {
 	if _, err := os.Stat(destFolder); os.IsNotExist(err) {
 		err = os.MkdirAll(destFolder, 0755)
 		if err != nil {
-			return err
+			fmt.Println("Error creating folder:", err)
 		}
 	}
 
 	destFile, err := os.Create(destinationPath)
 	if err != nil {
-		return err
+		fmt.Println("Error creating file:", err)
 	}
 	defer destFile.Close()
 
 	_, err = io.Copy(destFile, sourceFile)
 	if err != nil {
-		return err
+		fmt.Println("Error copying file:", err)
 	}
-
-	return nil
 }
 
 func createFile(destination, name, contents string) {
