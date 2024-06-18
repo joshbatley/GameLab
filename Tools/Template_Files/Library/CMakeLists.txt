@@ -8,7 +8,6 @@ find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
 find_package(EnTT CONFIG REQUIRED)
 
-
 add_executable(#NAME# src/main.cpp)
 
 target_link_libraries(#NAME# PRIVATE
