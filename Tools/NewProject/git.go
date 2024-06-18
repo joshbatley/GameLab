@@ -11,7 +11,7 @@ func gitAddSubmodule(assetRoot string) {
 	defer os.Chdir(originalDir)
 	os.Chdir(getProjectRoot())
 
-	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, filepath.Join(assetRoot, "/private"))
+	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, filepath.Join(assetRoot, "private"))
 
 	cmd.Run()
 }
