@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -40,39 +37,47 @@ func (w *Writer) Run() {
 }
 
 func (w *Writer) generateGameProject() {
-	folder := createFolder(w.getFullName())
-	w.copyTemplateFiles(folder)
-	w.updateTemplateFiles(folder)
-	src := generateRootFolder(folder)
-	w.generateGameMainFile(src)
-	engineSrc := generateEngineFolder(src)
-	generateEngineHeader(w.Libraries, engineSrc)
-	w.generateEngineFiles(engineSrc)
-	assetSrc := generateAssetFolder(folder)
-	w.gitAddSubmodule(assetSrc)
-	w.gitCommit()
+	projectFolder := createFolder(getProjectRoot(), w.getFullName())
+	srcFolder := createFolder(projectFolder, "src")
+	engineFolder := createFolder(projectFolder, "Engine")
+	assetFolder := createFolder(projectFolder, "assets")
+
+	w.copyTemplateRootFiles(projectFolder)
+	w.copyTemplateTypeFiles(projectFolder)
+	w.updateTemplateFiles(projectFolder)
+	w.generateGameMainFile(srcFolder)
+	w.generateEngineHeader(engineFolder)
+	w.generateEngineFiles(engineFolder)
+
+	gitAddSubmodule(assetFolder)
+	gitCommit(w.getFullName())
 }
 
 func (w *Writer) generateLibraryProject() {
-	folder := createFolder(w.getFullName())
-	w.copyTemplateFiles(folder)
+	folder := createFolder(getProjectRoot(), w.getFullName())
+
+	w.copyTemplateRootFiles(folder)
+	w.copyTemplateTypeFiles(folder)
 	w.updateTemplateFiles(folder)
 	w.generateLibraryFiles(folder)
-	w.gitCommit()
+	gitCommit(w.getFullName())
 }
 
 func (w *Writer) generateToolProject() {
-	folder := createFolder(w.getFullName())
-	w.copyTemplateFiles(folder)
+	folder := createFolder(getProjectRoot(), w.getFullName())
+	srcFolder := createFolder(folder, "src")
+	engineFolder := createFolder(folder, "Engine")
+	assetFolder := createFolder(folder, "assets")
+
+	w.copyTemplateRootFiles(folder)
+	w.copyTemplateTypeFiles(folder)
 	w.updateTemplateFiles(folder)
-	src := generateRootFolder(folder)
-	w.generateToolMainFile(src)
-	engineSrc := generateEngineFolder(src)
-	generateEngineHeader(w.Libraries, engineSrc)
-	w.generateEngineFiles(engineSrc)
-	assetSrc := generateAssetFolder(folder)
-	w.gitAddSubmodule(assetSrc)
-	w.gitCommit()
+	w.generateToolMainFile(srcFolder)
+	w.generateEngineHeader(engineFolder)
+	w.generateEngineFiles(engineFolder)
+
+	gitAddSubmodule(assetFolder)
+	gitCommit(w.getFullName())
 }
 
 func (w *Writer) getFullName() string {
@@ -95,7 +100,7 @@ func (w *Writer) getToolTile() string {
 	return "Tool - " + w.Name
 }
 
-func (w *Writer) copyTemplateFiles(folder string) {
+func (w *Writer) copyTemplateRootFiles(folder string) {
 	path := filepath.Join(getProjectRoot(), TemplatePath)
 	fileInfos, _ := os.ReadDir(path)
 	for _, file := range fileInfos {
@@ -103,104 +108,36 @@ func (w *Writer) copyTemplateFiles(folder string) {
 			sourcePath := filepath.Join(path, file.Name())
 			destinationPath := filepath.Join(folder, file.Name())
 			copyFile(sourcePath, destinationPath)
-		} else {
-			nestedFileInfo, _ := os.ReadDir(filepath.Join(path, file.Name()))
-			for _, nestedFile := range nestedFileInfo {
-				sourcePath := filepath.Join(path, toPrefix(w.Type), nestedFile.Name())
-				destinationPath := filepath.Join(folder, nestedFile.Name())
-				copyFile(sourcePath, destinationPath)
-			}
-
 		}
 	}
 }
 
-func copyFile(sourcePath, destinationPath string) error {
-	sourceFile, err := os.Open(sourcePath)
-	if err != nil {
-		return err
+func (w *Writer) copyTemplateTypeFiles(folder string) {
+	path := filepath.Join(getProjectRoot(), TemplatePath, w.Type.toPrefix())
+	fileInfos, _ := os.ReadDir(path)
+	for _, file := range fileInfos {
+		sourcePath := filepath.Join(path, file.Name())
+		destinationPath := filepath.Join(folder, file.Name())
+		copyFile(sourcePath, destinationPath)
 	}
-	defer sourceFile.Close()
-
-	destFolder := filepath.Dir(destinationPath)
-	if _, err := os.Stat(destFolder); os.IsNotExist(err) {
-		err = os.MkdirAll(destFolder, 0755)
-		if err != nil {
-			return err
-		}
-	}
-
-	destFile, err := os.Create(destinationPath)
-	if err != nil {
-		return err
-	}
-	defer destFile.Close()
-
-	_, err = io.Copy(destFile, sourceFile)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func createFolder(name string) string {
-	path := filepath.Join(getProjectRoot(), name)
-	err := os.Mkdir(path, os.ModePerm)
-	if err != nil {
-		fmt.Println("Error creating directory:", err)
-	}
-	return path
 }
 
 func (w *Writer) updateTemplateFiles(folder string) {
 	path := filepath.Join(folder)
 	fileInfos, _ := os.ReadDir(path)
 	for _, file := range fileInfos {
-		content, err := os.ReadFile(filepath.Join(path, file.Name()))
-		if err != nil {
-			fmt.Println("Error reading file:", err)
-			return
-		}
-
-		// Convert content to string
-		fileContent := string(content)
-
-		modifiedContent := strings.Replace(fileContent, NameReplace, w.Name, -1)
-
-		// Write the modified content back to the file
-		err = os.WriteFile(filepath.Join(path, file.Name()), []byte(modifiedContent), 0644)
-		if err != nil {
-			fmt.Println("Error writing file:", err)
-			return
-		}
-
+		content := readFile(filepath.Join(path, file.Name()))
+		modifiedContent := strings.Replace(content, NameReplace, w.Name, -1)
+		createFile(path, file.Name(), modifiedContent)
 	}
-
 }
 
-func generateRootFolder(folder string) string {
-	err := os.Mkdir(filepath.Join(folder, "src"), os.ModePerm)
-	if err != nil {
-		fmt.Println("Error creating directory:", err)
-	}
-	return filepath.Join(folder, "src")
-}
-
-func generateEngineFolder(folder string) string {
-	err := os.Mkdir(filepath.Join(folder, "Engine"), os.ModePerm)
-	if err != nil {
-		fmt.Println("Error creating directory:", err)
-	}
-	return filepath.Join(folder, "Engine")
-}
-
-func generateEngineHeader(libraries []LibraryConfig, folder string) {
+func (w *Writer) generateEngineHeader(folder string) {
 	engineContents := "#pragma once\n\n"
-	for _, lib := range libraries {
+	for _, lib := range w.Libraries {
 		for _, f := range lib.Files {
 			if strings.HasSuffix(f, ".h") {
-				engineContents += "#include \"" + lib.OutLocation + "/" + f + "\"\n"
+				engineContents += "#include \"" + lib.OutPath + "/" + f + "\"\n"
 			}
 		}
 	}
@@ -227,12 +164,12 @@ namespace Engine {
         }
     };
 }`
-	os.WriteFile(filepath.Join(folder, "Engine.h"), []byte(engineContents), 0644)
-	os.WriteFile(filepath.Join(folder, "Alias.h"), []byte(aliasContent), 0644)
+	createFile(folder, "Engine.h", engineContents)
+	createFile(folder, "Alias.h", aliasContent)
 }
 
 func (w *Writer) generateGameMainFile(folder string) {
-	mainContent := `#include "Engine/Engine.h"
+	content := `#include "Engine/Engine.h"
 
 int main()
 {
@@ -240,11 +177,11 @@ int main()
     return 0;
 }
 `
-	os.WriteFile(filepath.Join(folder, "main.cpp"), []byte(mainContent), 0644)
+	createFile(folder, "main.cpp", content)
 }
 
 func (w *Writer) generateToolMainFile(folder string) {
-	mainContent := `#include "Engine/Engine.h"
+	content := `#include "Engine/Engine.h"
 
 int main()
 {
@@ -252,14 +189,14 @@ int main()
     return 0;
 }
 `
-	os.WriteFile(filepath.Join(folder, "main.cpp"), []byte(mainContent), 0644)
+	createFile(folder, "main.cpp", content)
 }
 
 func (w *Writer) generateEngineFiles(folder string) {
 	for _, lib := range w.Libraries {
 		for _, f := range lib.Files {
 			sourcePath := filepath.Join(lib.RootPath, f)
-			destinationPath := filepath.Join(folder, lib.OutLocation, f)
+			destinationPath := filepath.Join(folder, lib.OutPath, f)
 			copyFile(sourcePath, destinationPath)
 		}
 	}
@@ -274,34 +211,6 @@ func (w *Writer) generateLibraryFiles(folder string) {
 class ` + w.Name + ` {
 
 };`
-
-	os.WriteFile(filepath.Join(folder, w.Name+".cpp"), []byte(cppContent), 0644)
-	os.WriteFile(filepath.Join(folder, w.Name+".h"), []byte(hContent), 0644)
-}
-
-func generateAssetFolder(folder string) string {
-	err := os.Mkdir(filepath.Join(folder, "assets"), os.ModePerm)
-	if err != nil {
-		fmt.Println("Error creating directory:", err)
-	}
-	return filepath.Join(folder, "assets")
-}
-
-func (w *Writer) gitAddSubmodule(folder string) {
-	originalDir, _ := os.Getwd()
-	defer os.Chdir(originalDir)
-	os.Chdir(getProjectRoot())
-
-	cmd := exec.Command("git", "submodule", "add", GitAssetRepo, filepath.Join(w.getFullName()+"/asset/private"))
-	cmd.Run()
-}
-
-func (w *Writer) gitCommit() {
-	originalDir, _ := os.Getwd()
-	defer os.Chdir(originalDir)
-	os.Chdir(getProjectRoot())
-	cmd := exec.Command("git", "add", ".")
-	cmd.Run()
-	cmd = exec.Command("git", "commit", "-m", "Added new Project: "+w.getFullName())
-	cmd.Run()
+	createFile(folder, w.Name+".cpp", cppContent)
+	createFile(folder, w.Name+".h", hContent)
 }

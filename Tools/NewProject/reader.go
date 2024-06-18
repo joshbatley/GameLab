@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -20,31 +19,21 @@ func NewReader() *Reader {
 }
 
 func (r *Reader) Run() *Reader {
-	r.setup()
-	return r
-}
-
-func (r *Reader) setup() {
 	folders := getValidFolder()
 	for _, file := range folders {
 		r.setUpGames(file)
 		r.setUpLibraries(file)
 		r.setUpTool(file)
 	}
+	return r
 }
 
 func getValidFolder() []os.FileInfo {
 	path := filepath.Join(getProjectRoot(), BaseFolder)
-	f, err := os.Open(path)
-	if err != nil {
-		fmt.Println(err)
-	}
+	f, _ := os.Open(path)
 	defer f.Close()
 
-	fileInfo, err := f.Readdir(-1)
-	if err != nil {
-		fmt.Println(err)
-	}
+	fileInfo, _ := f.Readdir(-1)
 	var validFolders []os.FileInfo
 	for _, file := range fileInfo {
 		if !file.IsDir() || !strings.HasPrefix(file.Name(), GamePrefix) || !strings.HasPrefix(file.Name(), LibraryPrefix) || strings.HasPrefix(file.Name(), ToolPrefix) {
@@ -60,6 +49,7 @@ func (r *Reader) setUpGames(folder os.FileInfo) {
 	if !strings.HasPrefix(folder.Name(), GamePrefix) {
 		return
 	}
+
 	s := strings.Split(folder.Name(), "_")
 	incStr, name := s[1], s[2]
 	inc, _ := strconv.Atoi(incStr)
@@ -74,6 +64,7 @@ func (r *Reader) setUpTool(folder os.FileInfo) {
 	if !strings.HasPrefix(folder.Name(), ToolPrefix) {
 		return
 	}
+
 	s := strings.Split(folder.Name(), "_")
 	r.Tools = append(r.Tools, ToolConfig{
 		Name: s[1],
@@ -89,17 +80,17 @@ func (r *Reader) setUpLibraries(folder os.FileInfo) {
 	cfg, err := readConfig(fullPath)
 	if err != nil {
 		fmt.Println("LibraryConfig found with no config", folder.Name())
-		return
 	}
+
 	r.Libraries = append(r.Libraries, LibraryConfig{
-		Name:        cfg.Name,
-		OutLocation: cfg.OutLocation,
-		Files:       cfg.Files,
-		RootPath:    filepath.Join(getProjectRoot(), BaseFolder, folder.Name()),
+		Name:     cfg.Name,
+		OutPath:  cfg.OutPath,
+		Files:    cfg.Files,
+		RootPath: filepath.Join(getProjectRoot(), BaseFolder, folder.Name()),
 	})
 }
 
-func (r *Reader) GetLatestGameIncrement() int {
+func (r *Reader) getLatestGameIncrement() int {
 	maxInc := 0
 	for _, s := range r.Games {
 		if s.Increment > maxInc {
@@ -109,20 +100,7 @@ func (r *Reader) GetLatestGameIncrement() int {
 	return maxInc + 1
 }
 
-func readConfig(path string) (LibraryConfig, error) {
-	var val LibraryConfig
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return val, err
-	}
-
-	if err := json.Unmarshal(data, &val); err != nil {
-		return val, err
-	}
-	return val, nil
-}
-
-func (r *Reader) GetAllNames() []string {
+func (r *Reader) getAllNames() []string {
 	var names []string
 	for _, g := range r.Games {
 		names = append(names, g.Name)
