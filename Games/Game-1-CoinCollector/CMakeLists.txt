@@ -8,7 +8,6 @@ find_package(SDL2_image CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
 
 include(assets/private/gameassets.cmake)
-file(COPY assets/font.ttf DESTINATION ${CMAKE_BINARY_DIR}/assets)
 
 add_executable(Game_1_CoinCollector src/main.cpp
         src/Utils.h

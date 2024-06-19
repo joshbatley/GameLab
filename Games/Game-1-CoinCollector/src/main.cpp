@@ -34,7 +34,7 @@ int main(int, char**)
     int level = 1;
 
     TTF_Init();
-    TTF_Font* font = TTF_OpenFont("assets/font.ttf", 20);
+    TTF_Font* font = TTF_OpenFont((std::string(FONTS) + "/monogram/monogram.ttf").c_str(), 30);
 
     while (isRunning) {
         Uint32 frameStart = SDL_GetTicks();
