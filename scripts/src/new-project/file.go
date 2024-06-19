@@ -82,6 +82,12 @@ func createFile(destination, name, contents string) {
 }
 
 func copyFolderContents(source, destination string) {
+	originalDir, _ := os.Getwd()
+	defer os.Chdir(originalDir)
+	os.Chdir(getProjectRoot())
+
 	cmd := exec.Command("cp", "-r", source+"/*", destination)
-	cmd.Run()
+	if err := cmd.Run(); err != nil {
+		fmt.Println("Error copying file:", err)
+	}
 }
