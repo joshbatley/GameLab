@@ -10,7 +10,7 @@ This is the main piece of work to learn game engine development. I'm coding it a
 
 ### Games:
 Games made using the engine
--  [Game-1-CoinCollector](Games/Game_1_CoinCollector), a simple coin collector game around maps
+-  [Game-1-CoinCollector](Games/Game-1-CoinCollector), a simple coin collector game around maps
 -  [Game-2-CoinCollector_Refactor](Games/Game-2-CoinCollector_Refactor), a simple coin collector game around maps
 -  [Game-3-Tiler](Games/Game-3-Tiler/), a simple coin collector game around maps
 
@@ -19,4 +19,4 @@ A collection of apps using
 -  [SDL2_IMGUI_impl](Tools/SDL2_IMGUI_impl/), a demo of how SDL and ImGui work together for my reference.
 
 ### Scripts:
--  [scripts](Scripts), scripts for maintenance and management.
+-  [scripts](scripts), scripts for maintenance and management.
