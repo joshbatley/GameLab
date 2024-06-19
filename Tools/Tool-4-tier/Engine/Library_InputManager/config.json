@@ -1,0 +1,8 @@
+{
+  "name": "InputManager",
+  "outPath": "Core",
+  "files": [
+    "InputManager.cpp",
+    "InputManager.h"
+  ]
+}

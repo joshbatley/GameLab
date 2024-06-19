@@ -1,9 +1,12 @@
-[submodule "Game_1_CoinCollector/assets/private"]
-	path = Game_1_CoinCollector/assets/private
+[submodule "Games/Game-1-CoinCollector/assets/private"]
+	path = Games/Game-1-CoinCollector/assets/private
 	url = git@github.com:joshbatley/GameAssets.git
-[submodule "Game_2_CoinCollector_Refactor/assets/private"]
-	path = Game_2_CoinCollector_Refactor/assets/private
+[submodule "Games/Game-2-CoinCollector-Refactor/assets/private"]
+	path = Games/Game-2-CoinCollector-Refactor/assets/private
 	url = git@github.com:joshbatley/GameAssets.git
-[submodule "Game_3_Tiler/assets/private"]
-	path = Game_3_Tiler/assets/private
+[submodule "Tools/Tool-4-tier/assets/private"]
+	path = Tools/Tool-4-tier/assets/private
+	url = git@github.com:joshbatley/GameAssets.git
+[submodule "Games/Game-3-Tiler/assets/private"]
+	path = Games/Game-3-Tiler/assets/private
 	url = git@github.com:joshbatley/GameAssets.git

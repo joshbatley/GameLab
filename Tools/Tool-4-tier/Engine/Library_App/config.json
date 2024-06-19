@@ -1,0 +1,8 @@
+{
+  "name": "App",
+  "outPath": "Core",
+  "files": [
+    "App.cpp",
+    "App.h"
+  ]
+}

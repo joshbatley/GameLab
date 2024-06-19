@@ -1,8 +1,0 @@
-{
-  "name": "#NAME#",
-  "outPath": "Core",
-  "files": [
-    "#NAME#.cpp",
-    "#NAME#.h"
-  ]
-}

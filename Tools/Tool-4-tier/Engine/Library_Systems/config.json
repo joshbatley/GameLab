@@ -1,0 +1,9 @@
+{
+  "name": "Systems",
+  "outPath": "Systems",
+  "files": [
+    "Render.cpp",
+    "Render.h",
+    "Systems.h"
+  ]
+}

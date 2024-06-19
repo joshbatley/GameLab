@@ -1,0 +1,8 @@
+{
+  "name": "AssetRegistry",
+  "outPath": "Core",
+  "files": [
+    "AssetRegistry.cpp",
+    "AssetRegistry.h"
+  ]
+}

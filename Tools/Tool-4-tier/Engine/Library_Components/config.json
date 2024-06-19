@@ -1,0 +1,9 @@
+{
+  "name": "Components",
+  "outPath": "Components",
+  "files": [
+    "Sprite.h",
+    "Transform.h",
+    "Components.h"
+  ]
+}

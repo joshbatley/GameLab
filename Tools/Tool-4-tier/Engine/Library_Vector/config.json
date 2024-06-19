@@ -1,0 +1,7 @@
+{
+  "name": "Vector",
+  "outPath": "Core",
+  "files": [
+    "Vector.h"
+  ]
+}
