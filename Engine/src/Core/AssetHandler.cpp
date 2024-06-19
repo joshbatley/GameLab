@@ -1,20 +1,20 @@
-#include "AssetRegistry.h"
+#include "AssetHandler.h"
 
 namespace Asset {
-    Registry::Registry(SDL_Renderer *renderer)
+    Handler::Handler(SDL_Renderer *renderer)
         : _renderer(renderer)
     {
         TTF_Init();
     }
 
-    Registry::~Registry()
+    Handler::~Handler()
     {
         for (const auto &pair: _fontMap) {
             TTF_CloseFont(pair.second);
         }
     }
 
-    Engine::Font Registry::LoadFont(const std::string &key, const char *path, int size)
+    Engine::Font Handler::LoadFont(const std::string &key, const char *path, int size)
     {
         auto *font = TTF_OpenFont(path, size);
         if (font == nullptr) {
@@ -24,7 +24,7 @@ namespace Asset {
         return font;
     }
 
-    Engine::Texture Registry::LoadTexture(const std::string &key, const char *path)
+    Engine::Texture Handler::LoadTexture(const std::string &key, const char *path)
     {
         auto *tmp = IMG_Load(path);
         if (tmp == nullptr) {

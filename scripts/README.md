@@ -1,5 +1,4 @@
-# Tools
-Tolls and confg files and scripts that some projects will need anything from cmake, linting or custom build scripts.
+# Scripts
+Scripts used for repository/project management and maintenance.
 
-\# 1.0
-Added .clang-format
+-  new-project - To set up a new game or tool, add all the files, engine, and link it all up to begin development as soon as possible.

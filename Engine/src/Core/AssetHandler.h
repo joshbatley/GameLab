@@ -5,10 +5,10 @@
 #include <iostream>
 
 namespace Asset {
-    class Registry {
+    class Handler {
     public:
-        explicit Registry(SDL_Renderer *renderer);
-        ~Registry();
+        explicit Handler(SDL_Renderer *renderer);
+        ~Handler();
         Engine::Font LoadFont(const std::string &key, const char *path, int size);
         Engine::Texture LoadTexture(const std::string &key, const char *path);
 

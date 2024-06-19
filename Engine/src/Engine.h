@@ -6,10 +6,10 @@
 #include <entt/entt.hpp>
 
 #include "Core/App.h"
+#include "Core/AssetHandler.h"
 #include "Core/Engine.h"
-#include "Core/AssetRegistry.h"
-#include "Core/EventRegistry.h"
-#include "Core/Graphics.h"
+#include "Core/EventHandler.h"
+#include "Core/GraphicsHandler.h"
 #include "Core/InputManager.h"
 #include "Core/Vector.h"
 #include "Core/WindowManager.h"

@@ -20,7 +20,6 @@ namespace Window {
     class Manager {
     public:
         explicit Manager(Config config);
-        Manager(const char *title, int x, int y, int w, int h, Uint32 flags, bool showCursor, bool relativeMouse);
         ~Manager();
 
         void Clear() const;

@@ -8,9 +8,9 @@
 #include <unordered_map>
 
 namespace Graphics {
-    class Manager {
+    class Handler {
     public:
-        explicit Manager(SDL_Renderer *renderer);
+        explicit Handler(SDL_Renderer *renderer);
         void RenderText(const char *text, Engine::Font font, Vec::ivec4 color, Vec::ivec4 &dest);
         void RenderColor(Vec::ivec4 color, Vec::ivec4 dest);
         void Render(Engine::Texture texture, Vec::ivec4 src, Vec::ivec4 dest);

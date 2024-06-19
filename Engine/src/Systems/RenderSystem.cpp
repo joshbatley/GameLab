@@ -1,6 +1,6 @@
-#include "Render.h"
+#include "RenderSystem.h"
 
-void Render::System(Engine::World &world, Graphics::Manager &renderer)
+void RenderSystem::System(Engine::World &world, Graphics::Handler &renderer)
 {
     auto view = world.view<Sprite, Transform>();
     std::vector<Engine::Entity> entities(view.begin(), view.end());

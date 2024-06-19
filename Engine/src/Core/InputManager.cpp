@@ -44,7 +44,6 @@ namespace Input {
 
     void Manager::ProcessEvents(const SDL_Event *event)
     {
-        const auto now = std::time(nullptr);
         switch (event->type) {
             case SDL_MOUSEBUTTONUP:
             case SDL_MOUSEBUTTONDOWN:

@@ -8,7 +8,7 @@
 #include <vector>
 
 namespace Event {
-    class Registry {
+    class Handler {
     public:
         template<typename Event>
         void AddReader(std::function<void(Event)> readers)

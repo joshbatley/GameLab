@@ -6,11 +6,6 @@ namespace Window {
         Initialize(config.title, config.x, config.y, config.width, config.height, config.flags, config.showCursor, config.relativeMouse);
     }
 
-    Manager::Manager(const char *title, const int x, const int y, const int w, const int h, const Uint32 flags, bool showCursor, bool relativeMouse)
-    {
-        Initialize(title, x, y, w, h, flags, showCursor, relativeMouse);
-    }
-
     void Manager::Initialize(const char *title, int x, int y, int w, int h, Uint32 flags, bool showCursor, bool relativeMouse)
     {
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
