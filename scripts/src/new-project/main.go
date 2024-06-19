@@ -2,7 +2,7 @@ package main
 
 const (
 	BaseFolder   = "./"
-	TemplatePath = "../Template_Files"
+	TemplatePath = "../static-files"
 	GamePrefix   = "Game-"
 	ToolPrefix   = "Tool-"
 	GamesPath    = "Games"
