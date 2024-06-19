@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -26,20 +27,16 @@ func (r *Reader) Run() *Reader {
 }
 
 func getValidFolder() []os.FileInfo {
-	path := filepath.Join(getProjectRoot(), BaseFolder)
-	f, _ := os.Open(path)
-	defer f.Close()
-
-	fileInfo, _ := f.Readdir(-1)
-	var validFolders []os.FileInfo
-	for _, file := range fileInfo {
-		if !file.IsDir() || !strings.HasPrefix(file.Name(), GamePrefix) || strings.HasPrefix(file.Name(), ToolPrefix) {
-			continue
+	gameFolders := readFolders(filepath.Join(getProjectRoot(), BaseFolder, GamesPath))
+	toolFolders := readFolders(filepath.Join(getProjectRoot(), BaseFolder, ToolsPath))
+	folders := slices.Concat(gameFolders, toolFolders)
+	var projects []os.FileInfo
+	for _, folder := range folders {
+		if strings.HasPrefix(folder.Name(), GamePrefix) || strings.HasPrefix(folder.Name(), ToolPrefix) {
+			projects = append(projects, folder)
 		}
-		validFolders = append(validFolders, file)
 	}
-
-	return fileInfo
+	return projects
 }
 
 func (r *Reader) setUpGames(folder os.FileInfo) {
@@ -47,7 +44,7 @@ func (r *Reader) setUpGames(folder os.FileInfo) {
 		return
 	}
 
-	s := strings.Split(folder.Name(), "_")
+	s := strings.Split(folder.Name(), "-")
 	incStr, name := s[1], s[2]
 	inc, _ := strconv.Atoi(incStr)
 
@@ -62,7 +59,7 @@ func (r *Reader) setUpTools(folder os.FileInfo) {
 		return
 	}
 
-	s := strings.Split(folder.Name(), "_")
+	s := strings.Split(folder.Name(), "-")
 	incStr, name := s[1], s[2]
 	inc, _ := strconv.Atoi(incStr)
 

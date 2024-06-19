@@ -15,6 +15,22 @@ func getProjectRoot() string {
 	return strings.TrimSpace(string(output))
 }
 
+func readFolders(path string) []os.FileInfo {
+	f, _ := os.Open(path)
+	defer f.Close()
+
+	fileInfo, _ := f.Readdir(-1)
+	var validFolders []os.FileInfo
+	for _, file := range fileInfo {
+		if !file.IsDir() {
+			continue
+		}
+		validFolders = append(validFolders, file)
+	}
+
+	return fileInfo
+}
+
 func readFile(path string) string {
 	content, err := os.ReadFile(path)
 	if err != nil {
@@ -66,6 +82,6 @@ func createFile(destination, name, contents string) {
 }
 
 func copyFolderContents(source, destination string) {
-	cmd := exec.Command("cp", "-r", source, destination)
+	cmd := exec.Command("cp", "-r", filepath.Join(source, "/"), destination)
 	cmd.Run()
 }
