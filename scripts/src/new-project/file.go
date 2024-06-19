@@ -82,12 +82,20 @@ func createFile(destination, name, contents string) {
 }
 
 func copyFolderContents(source, destination string) {
-	originalDir, _ := os.Getwd()
-	defer os.Chdir(originalDir)
-	os.Chdir(getProjectRoot())
+	filepath.Walk(source, func(path string, info os.FileInfo, err error) error {
+		relPath, _ := filepath.Rel(source, path)
+		destPath := filepath.Join(destination, relPath)
+		if info.IsDir() {
+			_ = os.MkdirAll(destPath, os.ModePerm)
+		} else {
+			srcFile, _ := os.Open(path)
+			defer srcFile.Close()
 
-	cmd := exec.Command("cp", "-r", source+"/*", destination)
-	if err := cmd.Run(); err != nil {
-		fmt.Println("Error copying file:", err)
-	}
+			destFile, _ := os.Create(destPath)
+			defer destFile.Close()
+
+			_, _ = io.Copy(destFile, srcFile)
+		}
+		return nil
+	})
 }

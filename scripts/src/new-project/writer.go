@@ -28,14 +28,14 @@ func (w *Writer) Run() {
 func (w *Writer) generateGameProject() {
 	projectFolder := createFolder(filepath.Join(getProjectRoot(), GamesPath), w.Project.Name())
 	srcFolder := createFolder(projectFolder, "src")
-	createFolder(projectFolder, "Engine")
+	engineFolder := createFolder(projectFolder, "Engine")
 	createFolder(projectFolder, "assets")
 
 	w.copyTemplateRootFiles(projectFolder)
 	w.copyTemplateTypeFiles(projectFolder)
 	w.updateTemplateFiles(projectFolder)
 	w.generateMainFile(srcFolder)
-	copyFolderContents(EnginePath, filepath.Join(GamesPath, w.Project.Name(), EnginePath))
+	copyFolderContents(filepath.Join(getProjectRoot(), EnginePath), engineFolder)
 
 	addSubmoduleAndCommit(filepath.Join(GamesPath, w.Project.Name(), "assets"), w.Project.Name())
 }
@@ -43,14 +43,14 @@ func (w *Writer) generateGameProject() {
 func (w *Writer) generateToolProject() {
 	projectFolder := createFolder(filepath.Join(getProjectRoot(), ToolsPath), w.Project.Name())
 	srcFolder := createFolder(projectFolder, "src")
-	createFolder(projectFolder, "Engine")
+	engineFolder := createFolder(projectFolder, "Engine")
 	createFolder(projectFolder, "assets")
 
 	w.copyTemplateRootFiles(projectFolder)
 	w.copyTemplateTypeFiles(projectFolder)
 	w.updateTemplateFiles(projectFolder)
 	w.generateMainFile(srcFolder)
-	copyFolderContents(EnginePath, filepath.Join(ToolsPath, w.Project.Name(), EnginePath))
+	copyFolderContents(filepath.Join(getProjectRoot(), EnginePath), engineFolder)
 
 	addSubmoduleAndCommit(filepath.Join(ToolsPath, w.Project.Name(), "assets"), w.Project.Name())
 }
