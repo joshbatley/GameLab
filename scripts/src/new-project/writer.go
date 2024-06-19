@@ -92,10 +92,11 @@ func (w *Writer) updateTemplateFiles(folder string) {
 
 func (w *Writer) generateMainFile(folder string) {
 	content := `#include "Engine.h"
+#include <iostream>
 
 int main()
 {
-  std::cout << "` + w.Project.Title() + `" << std::endl;
+ 	std::cout << "` + w.Project.Title() + `" << std::endl;
     return 0;
 }
 `
