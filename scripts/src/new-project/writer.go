@@ -37,7 +37,7 @@ func (w *Writer) generateGameProject() {
 	w.generateMainFile(srcFolder)
 	copyFolderContents(filepath.Join(getProjectRoot(), EnginePath), engineFolder)
 
-	addSubmoduleAndCommit(filepath.Join(w.Project.Name(), "assets"), w.Project.Name())
+	addSubmoduleAndCommit(filepath.Join(GamesPath, w.Project.Name(), "assets"), w.Project.Name())
 }
 
 func (w *Writer) generateToolProject() {
@@ -52,7 +52,7 @@ func (w *Writer) generateToolProject() {
 	w.generateMainFile(srcFolder)
 	copyFolderContents(filepath.Join(getProjectRoot(), EnginePath), engineFolder)
 
-	addSubmoduleAndCommit(filepath.Join(w.Project.Name(), "assets"), w.Project.Name())
+	addSubmoduleAndCommit(filepath.Join(GamesPath, w.Project.Name(), "assets"), w.Project.Name())
 }
 
 func (w *Writer) copyTemplateRootFiles(folder string) {

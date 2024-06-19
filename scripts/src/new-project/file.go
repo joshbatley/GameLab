@@ -82,6 +82,6 @@ func createFile(destination, name, contents string) {
 }
 
 func copyFolderContents(source, destination string) {
-	cmd := exec.Command("cp", "-r", filepath.Join(source, "/"), destination)
+	cmd := exec.Command("cp", "-r", source+"/*", destination)
 	cmd.Run()
 }
