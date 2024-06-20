@@ -7,3 +7,6 @@
 [submodule "Games/Game-3-Tiler/assets/private"]
 	path = Games/Game-3-Tiler/assets/private
 	url = git@github.com:joshbatley/GameAssets.git
+[submodule "Tools/Tool-4-TileMapper/assets/private"]
+	path = Tools/Tool-4-TileMapper/assets/private
+	url = git@github.com:joshbatley/GameAssets.git
