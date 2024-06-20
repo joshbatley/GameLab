@@ -30,7 +30,7 @@ namespace Graphics {
         SDL_RenderCopy(_renderer, texture, &s, &d);
     }
 
-    void Handler::SetDrawColor() const
+    void Handler::SetDrawColor()
     {
         SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255);
     }

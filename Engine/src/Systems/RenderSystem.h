@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Components/Components.h"
-#include "../Core/GraphicsHandler.h"
-#include "../Engine.h"
+#include "Components/Components.h"
+#include "Core/GraphicsHandler.h"
+#include "Core/Engine.h"
 
 class RenderSystem {
 public:

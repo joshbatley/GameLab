@@ -1,16 +1,13 @@
 #pragma once
 
-#include "../Systems/Systems.h"
-#include "../Systems/RenderSystem.h"
+#include "Systems/Systems.h"
+#include "Systems/RenderSystem.h"
 #include "AssetHandler.h"
 #include "EventHandler.h"
 #include "InputManager.h"
 #include "WindowManager.h"
 #include "GraphicsHandler.h"
 #include <functional>
-#include <iostream>
-#include <tuple>
-#include <type_traits>
 #include <typeinfo>
 #include <vector>
 

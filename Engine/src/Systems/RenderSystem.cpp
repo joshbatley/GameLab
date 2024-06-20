@@ -4,7 +4,7 @@ void RenderSystem::System(Engine::World &world, Graphics::Handler &renderer)
 {
     auto view = world.view<Sprite, Transform>();
     std::vector<Engine::Entity> entities(view.begin(), view.end());
-    std::sort(entities.begin(), entities.end(), [&view](Engine::Entity a, Engine::Entity b) {
+    std::ranges::sort(entities, [&view](const Engine::Entity a, const Engine::Entity b) {
         return view.get<Transform>(a).translate.z < view.get<Transform>(b).translate.z;
     });
 
