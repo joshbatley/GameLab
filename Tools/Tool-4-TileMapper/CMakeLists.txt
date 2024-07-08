@@ -12,6 +12,7 @@ add_executable(Tool-4-TileMapper src/main.cpp
         src/Camera/Camera.cpp
         src/Camera/Camera.h
         src/File.h
+        src/olderTilerMain.cpp
 )
 
 target_link_libraries(Tool-4-TileMapper PRIVATE Engine)

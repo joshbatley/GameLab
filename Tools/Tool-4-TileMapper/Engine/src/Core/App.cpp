@@ -5,7 +5,6 @@ App::App(const Window::Config &config)
       _assetHandler(Asset::Handler(_windowManager.GetRenderer())),
       _graphicsHandler(Graphics::Handler(_windowManager.GetRenderer()))
 {
-    // this->AddSystem(System::RENDER, RenderSystem::System);
     auto &settings = AppSettings::GetInstance();
     settings.SetWindowManager(&_windowManager);
 }
@@ -21,7 +20,6 @@ void App::Run()
         _windowManager.FrameStart();
         _inputManager.Update();
         _inputManager.ProcessEvents(&isRunning);
-        _windowManager.ImGuiFrame();
 
         for (auto &system: _systems[System::Schedule::UPDATE]) {
             system();
@@ -35,7 +33,6 @@ void App::Run()
             system();
         }
 
-        _windowManager.ImGuiRender();
         _windowManager.LimitFrameRate();
         _windowManager.Present();
     }

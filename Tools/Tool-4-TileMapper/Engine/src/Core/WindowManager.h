@@ -1,9 +1,6 @@
 #pragma once
 
 #include <SDL.h>
-#include <imgui.h>
-#include <imgui_impl_sdl2.h>
-#include <imgui_impl_sdlrenderer2.h>
 #include <iostream>
 
 namespace Window {
@@ -29,8 +26,6 @@ namespace Window {
         void Present() const;
         void FrameStart();
         void LimitFrameRate() const;
-        void ImGuiFrame();
-        void ImGuiRender();
 
         SDL_Renderer *GetRenderer() const
         {

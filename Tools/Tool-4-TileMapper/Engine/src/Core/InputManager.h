@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SDL.h>
-#include <imgui_impl_sdl2.h>
 #include <functional>
 #include <unordered_map>
 
@@ -70,4 +69,4 @@ namespace Input {
 
         void ProcessEvents(const SDL_Event *event);
     };
-}
+}// namespace Input

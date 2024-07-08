@@ -31,22 +31,10 @@ namespace Window {
         if (relativeMouse) {
             SDL_SetRelativeMouseMode(SDL_TRUE);
         }
-
-        ImGui::CreateContext();
-        auto &io = ImGui::GetIO();
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-        ImGui::StyleColorsDark();
-
-        ImGui_ImplSDL2_InitForSDLRenderer(_window, _renderer);
-        ImGui_ImplSDLRenderer2_Init(_renderer);
     }
 
     Manager::~Manager()
     {
-        ImGui_ImplSDLRenderer2_Shutdown();
-        ImGui_ImplSDL2_Shutdown();
-        ImGui::DestroyContext();
-
         SDL_DestroyRenderer(_renderer);
         SDL_DestroyWindow(_window);
         SDL_Quit();
@@ -59,9 +47,6 @@ namespace Window {
 
     void Manager::Present() const
     {
-        auto &io = ImGui::GetIO();
-        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), _renderer);
-        SDL_RenderSetScale(_renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
         SDL_RenderPresent(_renderer);
     }
 
@@ -79,17 +64,5 @@ namespace Window {
         if (frame_time < frame_delay) {
             SDL_Delay(frame_delay - frame_time);
         }
-    }
-
-    void Manager::ImGuiFrame()
-    {
-        ImGui_ImplSDLRenderer2_NewFrame();
-        ImGui_ImplSDL2_NewFrame();
-        ImGui::NewFrame();
-    }
-
-    void Manager::ImGuiRender()
-    {
-        ImGui::Render();
     }
 }// namespace Window
