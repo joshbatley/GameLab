@@ -1,0 +1,9 @@
+{
+  "name" : "metalexample",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "467f9a6a2704dfae762c0d7d634839fdfbabfeb9",
+  "dependencies" : [ {
+    "name" : "sdl2",
+    "version>=" : "2.30.3#1"
+  } ]
+}

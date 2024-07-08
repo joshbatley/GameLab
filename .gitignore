@@ -35,7 +35,7 @@
 
 .DS_Store
 
-#Camke
+#Cmake
 **/cmake-build-debug
 **/cmake-build-*
 **/CMakeCache.txt
@@ -47,3 +47,4 @@
 **/*.cbp
 **/CMakeScripts
 **/compile_commands.json
+**/xcode
