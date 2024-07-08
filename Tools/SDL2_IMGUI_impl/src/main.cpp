@@ -35,7 +35,7 @@ int main(int, char **)
     ImGui::CreateContext();
     auto &io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;// Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
@@ -64,7 +64,7 @@ int main(int, char **)
         ImGui_ImplSDL2_NewFrame();
 
         ImGui::NewFrame();
-        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+        // ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
         ImGui::ShowDemoWindow();
 
@@ -72,11 +72,11 @@ int main(int, char **)
         ImGui::Render();
 
         SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-        SDL_SetRenderDrawColor(renderer,
-          static_cast<Uint8>(clear_color.x * 255),
-          static_cast<Uint8>(clear_color.y * 255),
-          static_cast<Uint8>(clear_color.z * 255),
-          static_cast<Uint8>(clear_color.w * 255));
+        // SDL_SetRenderDrawColor(renderer,
+        //   static_cast<Uint8>(clear_color.x * 255),
+        //   static_cast<Uint8>(clear_color.y * 255),
+        //   static_cast<Uint8>(clear_color.z * 255),
+        //   static_cast<Uint8>(clear_color.w * 255));
         SDL_RenderClear(renderer);
 
         ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());

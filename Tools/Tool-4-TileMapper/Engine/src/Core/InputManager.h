@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <imgui_impl_sdl2.h>
 #include <functional>
 #include <unordered_map>
 

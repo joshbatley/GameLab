@@ -1,6 +1,9 @@
 #pragma once
 
 #include <SDL.h>
+#include <imgui.h>
+#include <imgui_impl_sdl2.h>
+#include <imgui_impl_sdlrenderer2.h>
 #include <iostream>
 
 namespace Window {
@@ -19,17 +22,24 @@ namespace Window {
 
     class Manager {
     public:
-        explicit Manager(Config config);
+        explicit Manager(const Config &config);
         ~Manager();
 
         void Clear() const;
         void Present() const;
         void FrameStart();
         void LimitFrameRate() const;
+        void ImGuiFrame();
+        void ImGuiRender();
 
         SDL_Renderer *GetRenderer() const
         {
             return _renderer;
+        }
+
+        SDL_Window *GetWindow() const
+        {
+            return +_window;
         }
 
     private:
@@ -39,4 +49,4 @@ namespace Window {
 
         void Initialize(const char *title, int x, int y, int w, int h, Uint32 flags, bool showCursor, bool relativeMouse);
     };
-}
+}// namespace Window

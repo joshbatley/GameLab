@@ -1,11 +1,13 @@
 #include "App.h"
 
-App::App(Window::Config config)
-    : _window(config),
-      _graphics(Graphics::Handler(_window.GetRenderer())),
-      _assetRegistry(Asset::Handler(_window.GetRenderer()))
+App::App(const Window::Config &config)
+    : _windowManager(config),
+      _assetHandler(Asset::Handler(_windowManager.GetRenderer())),
+      _graphicsHandler(Graphics::Handler(_windowManager.GetRenderer()))
 {
-    this->AddSystem(System::RENDER, RenderSystem::System);
+    // this->AddSystem(System::RENDER, RenderSystem::System);
+    auto &settings = AppSettings::GetInstance();
+    settings.SetWindowManager(&_windowManager);
 }
 
 void App::Run()
@@ -16,25 +18,25 @@ void App::Run()
 
     bool isRunning = true;
     while (isRunning) {
-        _window.FrameStart();
+        _windowManager.FrameStart();
         _inputManager.Update();
-
         _inputManager.ProcessEvents(&isRunning);
+        _windowManager.ImGuiFrame();
 
         for (auto &system: _systems[System::Schedule::UPDATE]) {
             system();
         }
 
-        _eventRegistry.Update();
-
-        _graphics.SetDrawColor();
-        _window.Clear();
+        _eventHandler.Update();
+        _graphicsHandler.SetDrawColor();
+        _windowManager.Clear();
 
         for (auto &system: _systems[System::Schedule::RENDER]) {
             system();
         }
 
-        _window.LimitFrameRate();
-        _window.Present();
+        _windowManager.ImGuiRender();
+        _windowManager.LimitFrameRate();
+        _windowManager.Present();
     }
 }
